@@ -1,0 +1,16 @@
+---- spi_rx_buff_len Matches (16 in 1 files) ----
+DeviceBtj_Handler.c (src\app):58:u_int8 spi_rx_buff_len  = 0;
+DeviceBtj_Handler.c (src\app):1053:				spi_rx_buff_len = spi_rx_data[0];
+DeviceBtj_Handler.c (src\app):1054:				bprintf("get data len=%d\n", spi_rx_buff_len);
+DeviceBtj_Handler.c (src\app):1057:				for(i = 0; i < spi_rx_buff_len; i++)
+DeviceBtj_Handler.c (src\app):1063:				if(spi_rx_buff_len)
+DeviceBtj_Handler.c (src\app):1066:					SPI_transmit_data(spi_tx_data, spi_rx_data, spi_rx_buff_len);
+DeviceBtj_Handler.c (src\app):1067:					for(i = 0; i < spi_rx_buff_len; i++)
+DeviceBtj_Handler.c (src\app):1125:				if(DeviceRfc_Send(&btj_adapter, &spp_service, spi_rx_data, spi_rx_buff_len))
+DeviceBtj_Handler.c (src\app):1137:			if(!send_cnt && (spi_rx_buff_len || uart_send_length) && (hid_flag == 0))
+DeviceBtj_Handler.c (src\app):1182:				if(uart_send_length || spi_rx_buff_len)
+DeviceBtj_Handler.c (src\app):1199:								else if(spi_rx_buff_len)
+DeviceBtj_Handler.c (src\app):1200:									spi_rx_buff_len--;
+DeviceBtj_Handler.c (src\app):1202:								bprintf("spi_rx_buff_len=%d\n", spi_rx_buff_len);
+DeviceBtj_Handler.c (src\app):1238:				else if(spi_rx_buff_len)
+DeviceBtj_Handler.c (src\app):1239:					spi_rx_buff_len--;

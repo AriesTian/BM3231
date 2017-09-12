@@ -1,0 +1,22 @@
+
+ROOT 0x00000000
+{
+    FLASH 0x00000000  ALIGNALL 32
+    {
+       sys_boot.o (SYS_Boot, +First)
+		;vectors.o(Startup, +FIRST)
+        *(+RO)
+    }
+    FAST_CALL_SEG +0 ALIGNALL 32
+    {
+       * (fastcall)
+    }
+
+
+    RAM 0x00400000 NOCOMPRESS
+    {
+        *(+RW,+ZI)
+    }
+}
+
+

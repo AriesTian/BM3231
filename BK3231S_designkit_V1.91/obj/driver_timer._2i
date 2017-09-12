@@ -1,0 +1,5 @@
+--thumb -c --cpu ARM9E -g -O3 --apcs=interwork --split_sections -I.\src\include -I.\src\Driver -I.\src\Core\bt\include -I.\src\Core\btj_src\include -I.\src\Core\hc\include -I.\src\Core\hw\include -I.\src\Core\lc\include -I.\src\Core\lc\dl\include -I.\src\Core\lc\lslc\include -I.\src\Core\lc\uslc\include -I.\src\Core\lmp\include -I.\src\Core\sys\include -I.\src\Core\transport\include -I.\src\hal\hw\include -I.\src\include -I.\src\hal\hw\radio\bk3011\include -I.\src\hal\hw\sco_codec\include -I.\src\hal\prth_chimera\sys\include -I.\src\Core\tc\include -I.\src\App -I.\src\hal\prth_chimera\hcit\include
+-I d:\Keil_v5\ARM\RV31\INC
+-I d:\Keil_v5\ARM\CMSIS\Include
+-D__UVISION_VERSION="514"
+-o .\obj\driver_timer.o --omf_browse .\obj\driver_timer.crf --depend .\obj\driver_timer.d --feedback ".\obj\BK3231S_Test_Firmware.fed" "src\Driver\driver_timer.c"

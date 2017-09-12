@@ -1,0 +1,1748 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;
+    2 00000000         ; MODULE:         sys_boot.s
+    3 00000000         ; PROJECT:        BlueStream
+    4 00000000         ; MAINTAINER:     Ivan Griffin
+    5 00000000         ; CREATION DATE:  28 September 2000
+    6 00000000         ; DESCRIPTION:    common ARM system boot-code
+    7 00000000         ;
+    8 00000000         ; SOURCE CONTROL: $Id: sys_boot.s,v 1.11 2004/07/07 14:3
+                       0:48 namarad Exp $
+    9 00000000         ;
+   10 00000000         ; REVISION HISTORY:
+   11 00000000         ;    14.Sept.2000         IG      Based on sys_boot.s fo
+                       r AEB
+   12 00000000         ;
+   13 00000000         ; LICENSE:
+   14 00000000         ;     This source code is copyright (c) 2000-2004 Ceva I
+                       nc.,
+   15 00000000         ;     All rights reserved.
+   16 00000000         ;
+   17 00000000         
+   18 00000000                 PRESERVE8
+   19 00000000                 AREA             SYS_Boot, CODE, READONLY
+   20 00000000         
+   21 00000000                 EXPORT           SYSboot_Startup
+   22 00000000                 EXPORT           SYSboot_Warm_Startup
+   23 00000000         
+   24 00000000                 EXPORT           _SYSboot_Power_Down
+   25 00000000         
+   26 00000000         ; IF :DEF: ADS_TOOLCHAIN_SUPPORTED
+   27 00000000         ;  IMPORT main, WEAK
+   28 00000000         ;  ELSE
+   29 00000000                 IMPORT           main, WEAK
+   30 00000000         ; ENDIF
+   31 00000000         
+   32 00000000                 IMPORT           SYSpost_Test, WEAK
+   33 00000000                 IMPORT           hc_warm_reset, WEAK
+   34 00000000         
+   35 00000000                 IMPORT           SYSirq_IRQ_Handler
+   36 00000000                 IMPORT           SYSirq_FIQ_Handler
+   37 00000000         
+   38 00000000         ;IMPORT Enable_26M_Clock_When_Boot
+   39 00000000         
+   40 00000000                 IMPORT           SYSbuild_Info_Dummy, WEAK
+   41 00000000         ; stripping vector table
+   42 00000000         
+   43 00000000         ;
+   44 00000000         ; common ARM Definitions
+   45 00000000         ;
+   46 00000000         
+   47 00000000 00000010 
+                       MODE_USR
+                               EQU              0x10
+   48 00000000 00000011 
+                       MODE_FIQ
+                               EQU              0x11
+   49 00000000 00000012 
+                       MODE_IRQ
+                               EQU              0x12
+   50 00000000 00000013 
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                       MODE_SVC
+                               EQU              0x13
+   51 00000000 00000014 
+                       MODE_ABORT
+                               EQU              0x14
+   52 00000000 00000015 
+                       MODE_UNDEF
+                               EQU              0x15
+   53 00000000 0000001F 
+                       MODE_SYS
+                               EQU              0x1F
+   54 00000000         
+   55 00000000 00000080 
+                       I_BIT   EQU              0x80
+   56 00000000 00000040 
+                       F_BIT   EQU              0x40
+   57 00000000         
+   58 00000000         ;
+   59 00000000         ; common ARM code
+   60 00000000         ;
+   61 00000000         ;
+   62 00000000         ; THIS IS THE ENTRY POINT FOR THE ROM BUILD!!!
+   63 00000000         ; On power-up, the flash is located at 0x00000000
+   64 00000000         ; Program Counter starts at 0x00000000, and we jump to 
+   65 00000000         ; high flash at 0x04000000
+   66 00000000         ;
+   67 00000000         ; IF :DEF: BUILD_FOR_ROM
+   68 00000000         ; ENTRY
+   69 00000000         ; INFO 0, "Building for ROM"
+   70 00000000         ; ENDIF
+   71 00000000         ;    LDR PC, =SYSboot_Startup
+   72 00000000         
+   73 00000000                 EXPORT           SYS_Vector_Init_Block
+   74 00000000         
+   75 00000000         
+   76 00000000         SYS_Vector_Init_Block
+   77 00000000 E59FF018        LDR              PC, _Reset_Addr
+   78 00000004 E59FF018        LDR              PC, _Undefined_Addr
+   79 00000008 E59FF018        LDR              PC, _SWI_Addr
+   80 0000000C E59FF018        LDR              PC, _Prefetch_Abort_Addr
+   81 00000010 E59FF018        LDR              PC, _Data_Abort_Addr
+   82 00000014 E1A00000        NOP
+   83 00000018 E59FF018        LDR              PC, _IRQ_Addr ;restore for curr
+                                                            ent hardware
+   84 0000001C E59FF018        LDR              PC, _FIQ_Addr ;restore for curr
+                                                            ent hardware
+   85 00000020         
+   86 00000020         
+   87 00000020         
+   88 00000020 00000000 
+                       _Reset_Addr
+                               DCD              SYSboot_Startup
+   89 00000024 00000000 
+                       _Undefined_Addr
+                               DCD              _Undefined_Handler
+   90 00000028 00000000 
+                       _SWI_Addr
+                               DCD              _SWI_Handler
+   91 0000002C 00000000 
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+                       _Prefetch_Abort_Addr
+                               DCD              _Prefetch_Abort_Handler
+   92 00000030 00000000 
+                       _Data_Abort_Addr
+                               DCD              _Abort_Handler
+   93 00000034 00000000        DCD              0           ; Reserved Vector
+   94 00000038 00000000 
+                       _IRQ_Addr
+                               DCD              SYSirq_IRQ_Handler ; SYSirq_IRQ
+                                                            _Handler  
+   95 0000003C         ;#if (PRH_BS_DEV_USE_DELAYED_SERVICE_ROUTINES == 1)
+   96 0000003C         ;SYSirq_IRQ_wrapper
+   97 0000003C         ;else
+   98 0000003C         ;SYSirq_IRQ_Handler
+   99 0000003C 00000000 
+                       _FIQ_Addr
+                               DCD              SYSirq_FIQ_Handler
+  100 00000040         
+  101 00000040         
+  102 00000040         _Undefined_Handler
+  103 00000040         _SWI_Handler
+  104 00000040         _Prefetch_Abort_Handler
+  105 00000040         _Abort_Handler
+  106 00000040 EAFFFFFE        B                _Abort_Handler
+  107 00000044         
+  108 00000044         
+  109 00000044         ;
+  110 00000044         ; FUNCTION:     SYSboot_Startup
+  111 00000044         ; DESCRIPTION:  Cold-Boot Startup routine
+  112 00000044         ;
+  113 00000044         SYSboot_Startup
+  114 00000044         
+  115 00000044         
+  116 00000044         ;    BL      _SYSboot_Setup_Target_Specific
+  117 00000044         ;    BL      _SYSboot_Map_Flash_High
+  118 00000044         ; BL      _SYSboot_Config_LSRAM_Cache
+  119 00000044         ; BL      _SYSboot_Setup_Temp_POST_Stack
+  120 00000044         ;        BL      SYSpost_Test                     ; powe
+                       r-on, self test
+  121 00000044         ; BL      _SYSboot_Map_SRAM_Low
+  122 00000044 EB000025        BL               _SYSboot_Setup_Stacks_Disable_I
+ntr
+  123 00000048         
+  124 00000048         ;       BL      Enable_26M_Clock_When_Boot
+  125 00000048         
+  126 00000048 EB00005D        BL               _SYSboot_ZI_Init
+  127 0000004C         ;        BL      _SYSboot_Copy_CODE_To_LSRAM
+  128 0000004C EB000039        BL               _SYSboot_Copy_CODE_To_SRAM
+  129 00000050         
+  130 00000050         ;        MOV     R0, #0                            ; cle
+                       ar the warm_reset flag
+  131 00000050         ;        LDR     R1, =hc_warm_reset                
+  132 00000050         ;       STR     R0, [R1, #0]
+  133 00000050         
+  134 00000050         ;IF :DEF: ADS_TOOLCHAIN_SUPPORTED
+  135 00000050         ;   B       main                              ; and go!
+  136 00000050         ;ELSE
+  137 00000050 E59FF19C        LDR              PC, =main   ; and go!
+  138 00000054         ;ENDIF
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  139 00000054         
+  140 00000054         ;
+  141 00000054         ; FUNCTION:     SYSboot_Warm_Startup
+  142 00000054         ; DESCRIPTION:  Warm-Boot Startup routine (i.e. as the r
+                       esult of a
+  143 00000054         ;               HCI_RESET -- need to send HCI_Command_Co
+                       mplete when
+  144 00000054         ;               boot has finished)
+  145 00000054         ;
+  146 00000054         SYSboot_Warm_Startup
+  147 00000054         ; BL      _SYSboot_Setup_Target_Specific
+  148 00000054         ; BL      _SYSboot_Map_Flash_High
+  149 00000054         ;  BL      _SYSboot_Config_LSRAM_Cache
+  150 00000054         ;        BL      _SYSboot_Map_SRAM_Low
+  151 00000054 EB000021        BL               _SYSboot_Setup_Stacks_Disable_I
+ntr
+  152 00000058 EB000059        BL               _SYSboot_ZI_Init
+  153 0000005C         ;     BL      _SYSboot_Copy_CODE_To_LSRAM
+  154 0000005C EB000035        BL               _SYSboot_Copy_CODE_To_SRAM
+  155 00000060         
+  156 00000060 E3A00001        MOV              R0, #1      ; set the warm_rese
+                                                            t flag
+  157 00000064 E59F118C        LDR              R1, =hc_warm_reset
+  158 00000068 E5810000        STR              R0, [R1, #0]
+  159 0000006C         
+  160 0000006C         ;IF :DEF: ADS_TOOLCHAIN_SUPPORTED
+  161 0000006C         ;    B       main                              ; and go!
+                       
+  162 0000006C         ;ELSE
+  163 0000006C E59FF180        LDR              PC, =main   ; and go!
+  164 00000070         ;ENDIF
+  165 00000070         
+  166 00000070         _Dummy
+  167 00000070 E59FF184        LDR              PC, =SYS_Vector_Init_Block ; du
+                                                            mmy to prevent link
+                                                            er - not working fo
+                                                            r ADS linker
+  168 00000074 E59FF184        LDR              PC, =SYSbuild_Info_Dummy ; dumm
+                                                            y to prevent linker
+                                                             - not working for 
+                                                            ADS linker
+  169 00000078         ; stripping vector table
+  170 00000078 EAFFFFFE 
+                       _SYSboot_halt
+                               B                _SYSboot_halt ; should never re
+                                                            ach here!!!
+  171 0000007C         
+  172 0000007C         
+  173 0000007C         ; ******************************************************
+                       ****************
+  174 0000007C         
+  175 0000007C         ;
+  176 0000007C         ; Need to include Target Specific ARM Code
+  177 0000007C         ;
+  178 0000007C                 INCLUDE          sys_boot_chimera.s
+    1 0000007C         ;
+    2 0000007C         ; MODULE:         sys_boot_chimera.s
+    3 0000007C         ; MAINTAINER:     
+    4 0000007C         ; CREATION DATE:  21 November 2000
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+    5 0000007C         ; DESCRIPTION:    system boot code for Chimera (ARM7DI -
+                        XR7)
+    6 0000007C         ;
+    7 0000007C         ; SOURCE CONTROL:
+    8 0000007C         ;
+    9 0000007C         ; REVISION HISTORY:
+   10 0000007C         ;
+   11 0000007C         ; LICENSE:
+   12 0000007C         ;     This source code is copyright (c) 2000-2004 Ceva I
+                       nc.,
+   13 0000007C         ;     All rights reserved.
+   14 0000007C         ;
+   15 0000007C         ; Intended to be included in sys_boot_arm.s
+   16 0000007C         ;
+   17 0000007C         
+   18 0000007C         ;-------------------------------------------------------
+                       ---------------------
+   19 0000007C         ;  External Device Setup Registers (Accessed via Chip Se
+                       lect Pins)
+   20 0000007C         
+   21 0000007C 00010000 
+                       ROML0S  EQU              0x10000     ;ROM CS 0 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+   22 0000007C 00010004 
+                       ROML1S  EQU              0x10004     ;ROM CS 1 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+   23 0000007C 00010008 
+                       RAMLS   EQU              0x10008     ;RAM CS   setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+   24 0000007C 0001000C 
+                       EXL0S   EQU              0x1000C     ;EXT CS 0 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+   25 0000007C 00010010 
+                       EXL1S   EQU              0x10010     ;EXT CS 1 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+   26 0000007C 00010014 
+                       EXL2S   EQU              0x10014     ;EXT CS 2 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+   27 0000007C         
+   28 0000007C         ;-------------------------------------------------------
+                       ---------------------
+   29 0000007C         ;  System Configuration Registers
+   30 0000007C         
+   31 0000007C 00010100 
+                       SREGA   EQU              0x10100     ;config reg A - Clo
+                                                            ck source register 
+                                                            (RW)
+   32 0000007C 00010104 
+                       SREGB   EQU              0x10104     ;config reg B - I/O
+                                                             BUS OUT 7..0 optio
+                                                            ns (RW)
+   33 0000007C 00010108 
+                       SREGC   EQU              0x10108     ;config reg C - I/O
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+                                                             BUS OUT 15..8 opti
+                                                            ons (RW)
+   34 0000007C 0001010C 
+                       SREGD   EQU              0x1010C     ;config reg D - I/O
+                                                             BUS IN options (RW
+                                                            )
+   35 0000007C 00010110 
+                       SREGE   EQU              0x10110     ;config reg E - I/O
+                                                             BUS test options (
+                                                            RW)
+   36 0000007C 00010114 
+                       SREGF   EQU              0x10114     ;config reg F - non
+                                                             I/O BUS options (R
+                                                            W)
+   37 0000007C         
+   38 0000007C         ;-------------------------------------------------------
+                       ---------------------
+   39 0000007C         ;  System Interrupt Control/Status Registers Base Addres
+                       s and Registers
+   40 0000007C         ;  relative to the Base Address
+   41 0000007C         
+   42 0000007C 00010200 
+                       INT_base
+                               EQU              0x10200     ;Base address of In
+                                                            terrupt Registers
+   43 0000007C         
+   44 0000007C 00000000 
+                       FIQ_ST_ofst
+                               EQU              0x00        ;FIQ Status Registe
+                                                            r (RO)
+   45 0000007C 00000004 
+                       FIQ_MSK_ofst
+                               EQU              0x04        ;FIQ Control Regist
+                                                            er (WO)
+   46 0000007C 00000008 
+                       IRQ_HPS_ofst
+                               EQU              0x08        ;IRQ Highest Priori
+                                                            ty Status Register 
+                                                            (RO)
+   47 0000007C 0000000C 
+                       IRQ_ST_ofst
+                               EQU              0x0C        ;IRQ Status Registe
+                                                            r (RO)
+   48 0000007C 00000010 
+                       INT_ST_ofst
+                               EQU              0x10        ;INT RAW Status Reg
+                                                            ister (RO)
+   49 0000007C 00000014 
+                       IRQ_MSK_ofst
+                               EQU              0x14        ;IRQ Enable Mask Re
+                                                            gister(RW)
+   50 0000007C 00000018 
+                       IRQ_MAP_ofst
+                               EQU              0x18        ;IRQ Interrupt Map 
+                                                            Register (RW)
+   51 0000007C 0000001C 
+                       FIQ_MAP_ofst
+                               EQU              0x1C        ;FIQ Interrupt Map 
+                                                            Register (RW)
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+   52 0000007C 00000020 
+                       EXT_MAP_ofst
+                               EQU              0x20        ;EXT Interrupt Map 
+                                                            Register (RW)
+   53 0000007C 00000024 
+                       IRQ_PRI_ofst
+                               EQU              0x24        ;IRQ Priority Selec
+                                                            tion Register (RW)
+   54 0000007C 00000028 
+                       IRQ_CLR_ofst
+                               EQU              0x28        ;IRQ Clear Selectio
+                                                            n Register (WO)
+   55 0000007C 0000002C 
+                       INT_CFG_ofst
+                               EQU              0x2C        ;Interrupt Configur
+                                                            ation Register (RW)
+                                                            
+   56 0000007C 00000040 
+                       IOB_IC_ofst
+                               EQU              0x40        ;I/O Bus Interrupt 
+                                                            Control Register (R
+                                                            W)
+   57 0000007C 00000044 
+                       IOB_IS_ofst
+                               EQU              0x44        ;I/O Bus Interrupt 
+                                                            Setup Register (RW)
+                                                            
+   58 0000007C 0000004C 
+                       IOB_MSK_ofst
+                               EQU              0x4C        ;I/O Bus Interrupt 
+                                                            Mask Register (RW)
+   59 0000007C 00000050 
+                       IOB_ST_ofst
+                               EQU              0x50        ;I/O Bus Raw Status
+                                                             Register (RO)
+   60 0000007C 00000054 
+                       ITR_A_ofst
+                               EQU              0x54        ;Interrupt Test Reg
+                                                            ister A (WO)
+   61 0000007C 00000058 
+                       ITR_B_ofst
+                               EQU              0x58        ;Interrupt Test Reg
+                                                            ister B (RO)
+   62 0000007C         
+   63 0000007C         ;-------------------------------------------------------
+                       ---------------------
+   64 0000007C         ;  System Reset Registers
+   65 0000007C         
+   66 0000007C 00010300 
+                       RSTLST  EQU              0x10300     ;Type of last reset
+                                                             register (RO)
+   67 0000007C 00010304 
+                       RSTCRL  EQU              0x10304     ;ARM processor rese
+                                                            t control register 
+                                                            (RW)
+   68 0000007C 00010308 
+                       RMAP    EQU              0x10308     ;REMAP mode registe
+                                                            r (RW)
+   69 0000007C         
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+   70 0000007C         ;-------------------------------------------------------
+                       ---------------------
+   71 0000007C         ;  UART Base Addresses and Registers relative to the Bas
+                       e Addresses
+   72 0000007C         
+   73 0000007C 00010400 
+                       UART1_base
+                               EQU              0x10400     ;Base address of UA
+                                                            RT 1
+   74 0000007C 00010500 
+                       UART2_base
+                               EQU              0x10500     ;Base address of UA
+                                                            RT 2
+   75 0000007C 00010600 
+                       UART3_base
+                               EQU              0x10600     ;Base address of UA
+                                                            RT 3
+   76 0000007C         
+   77 0000007C         ; UART Register offsets to base address
+   78 0000007C         
+   79 0000007C 00000000 
+                       RBR_ofst
+                               EQU              0x00        ;RBR (Receive Buffe
+                                                            r Register) registe
+                                                            r (RO)
+   80 0000007C 00000000 
+                       THR_ofst
+                               EQU              0x00        ;THR (Transmit Hold
+                                                            ing Register) regis
+                                                            ter (WO)
+   81 0000007C 00000000 
+                       DLL_ofst
+                               EQU              0x00        ;DLL (Divisor Latch
+                                                             LSB) register (RW)
+                                                            
+   82 0000007C 00000004 
+                       DLM_ofst
+                               EQU              0x04        ;DLM (Divisor Latch
+                                                             MSB) register (RW)
+                                                            
+   83 0000007C 00000004 
+                       IER_ofst
+                               EQU              0x04        ;IER (Interrupt Ena
+                                                            ble Register) regis
+                                                            ter (RW)
+   84 0000007C 00000008 
+                       IIR_ofst
+                               EQU              0x08        ;IIR (Identificatio
+                                                            n Register) registe
+                                                            r (RO)
+   85 0000007C 00000008 
+                       FCR_ofst
+                               EQU              0x08        ;FCR (FIFO Control 
+                                                            Register) register 
+                                                            (WO)
+   86 0000007C 0000000C 
+                       LCR_ofst
+                               EQU              0x0C        ;LCR (Line Control 
+                                                            Register) register 
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+                                                            (RW)
+   87 0000007C 00000010 
+                       MCR_ofst
+                               EQU              0x10        ;MCR (Modem Control
+                                                             Register) register
+                                                             (RW)*
+   88 0000007C 00000014 
+                       LSR_ofst
+                               EQU              0x14        ;LSR (Line Status R
+                                                            egister) register (
+                                                            RO)
+   89 0000007C 00000018 
+                       MSR_ofst
+                               EQU              0x18        ;MSR (Modem Status 
+                                                            Register) register 
+                                                            (RO)*
+   90 0000007C 0000001C 
+                       SCR_ofst
+                               EQU              0x1C        ;SCR (Scratch Pad R
+                                                            egister) register (
+                                                            RW)
+   91 0000007C         ;
+   92 0000007C         ;  * these two registers are only implemented in UART 2
+   93 0000007C         ;    they are reserved in UART 1 and UART 3 and should n
+                       ot be used
+   94 0000007C         
+   95 0000007C         ;-------------------------------------------------------
+                       ---------------------
+   96 0000007C         ;  Manchester Encoder Registers Base Address
+   97 0000007C         ;  and Registers relative to the Base Address
+   98 0000007C         ;  (also contains IRDA and UART Control registers)
+   99 0000007C         
+  100 0000007C 00010700 
+                       MAN_base
+                               EQU              0x10700     ;Base address of Ma
+                                                            nchester Encoder Re
+                                                            gisters
+  101 0000007C         
+  102 0000007C         ; Manchester Encoder Register offsets to base address
+  103 0000007C         
+  104 0000007C 00000000 
+                       IRDACR_ofst
+                               EQU              0x00        ;IRDA Control Regis
+                                                            ter (WO)
+  105 0000007C 00000004 
+                       MANCR_ofst
+                               EQU              0x04        ;Manchester Encoder
+                                                             Control Register (
+                                                            WO)
+  106 0000007C 00000008 
+                       MANDIN_ofst
+                               EQU              0x08        ;Manchester Encoder
+                                                             Data TX Register (
+                                                            WO)
+  107 0000007C 0000000C 
+                       MANFLAG_ofst
+                               EQU              0x0C        ;Manchester Encoder
+                                                             Flag Register (RW)
+                                                            
+
+
+
+ARM Macro Assembler    Page 10 
+
+
+  108 0000007C 00000010 
+                       MANST_ofst
+                               EQU              0x10        ;Manchester Encoder
+                                                             Status Register (R
+                                                            O)
+  109 0000007C 00000014 
+                       USWITCH_ofst
+                               EQU              0x14        ;UART control switc
+                                                            h (RW)
+  110 0000007C         
+  111 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  112 0000007C         ;  General Purpose Peripheral Registers
+  113 0000007C         
+  114 0000007C 00010800 
+                       PWM1    EQU              0x10800     ;Width of PWM1 Regi
+                                                            ster (WO)
+  115 0000007C 00010804 
+                       PWM2    EQU              0x10804     ;Width of PWM2 Regi
+                                                            ster (WO)
+  116 0000007C 00010808 
+                       PWM3    EQU              0x10808     ;Width of PWM3 Regi
+                                                            ster (WO)
+  117 0000007C 0001080C 
+                       PWM_CLOCK
+                               EQU              0x1080C     ;PWM1,2,3 Clock Sou
+                                                            rce Selection Regis
+                                                            ter (WO)
+  118 0000007C         
+  119 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  120 0000007C         ;  Timer / NCO Registers Base Address and Registers rela
+                       tive to the Base Address
+  121 0000007C         
+  122 0000007C 00010A00 
+                       NCO_base
+                               EQU              0x10A00     ;Base address of Ti
+                                                            mer / NCO Registers
+                                                            
+  123 0000007C         
+  124 0000007C         ; Timer / NCO Register offsets to base address
+  125 0000007C         
+  126 0000007C 00000000 
+                       NCO_FREQL_ofst
+                               EQU              0x00        ;Timer NCO Freq LSB
+                                                             Register (WO)
+  127 0000007C 00000004 
+                       NCO_FREQH_ofst
+                               EQU              0x04        ;Timer NCO Freq MSB
+                                                             Register (WO)
+  128 0000007C 00000008 
+                       NCO_PHASE_ofst
+                               EQU              0x08        ;Timer NCO Phase Re
+                                                            gister (WO)
+  129 0000007C 0000000C 
+                       NCO_MODE_ofst
+                               EQU              0x0C        ;Timer NCO Control 
+                                                            Register (WO)
+  130 0000007C         
+
+
+
+ARM Macro Assembler    Page 11 
+
+
+  131 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  132 0000007C         ;  PPS Timing Registers Base Address and Registers relat
+                       ive to the Base Address
+  133 0000007C         
+  134 0000007C 00010C00 
+                       PPS_base
+                               EQU              0x10C00     ;Base address of PP
+                                                            S Registers
+  135 0000007C         
+  136 0000007C         ; PPS Register offsets to base address
+  137 0000007C         
+  138 0000007C 00000000 
+                       PPSA_STA_ofst
+                               EQU              0x00        ;PPS A Start Regist
+                                                            er (WO)
+  139 0000007C 00000004 
+                       PPSA_DUR_ofst
+                               EQU              0x04        ;PPS A Duration Reg
+                                                            ister (WO)
+  140 0000007C 00000008 
+                       PPSA_CTR_ofst
+                               EQU              0x08        ;PPS A Control Regi
+                                                            ster (WO)
+  141 0000007C 00000010 
+                       PPSB_STA_ofst
+                               EQU              0x10        ;PPS B Start Regist
+                                                            er (WO)
+  142 0000007C 00000014 
+                       PPSB_DUR_ofst
+                               EQU              0x14        ;PPS B Duration Reg
+                                                            ister (WO)
+  143 0000007C 00000018 
+                       PPSB_CTR_ofst
+                               EQU              0x18        ;PPS B Control Regi
+                                                            ster (WO)
+  144 0000007C 00000020 
+                       PPSC_STA_ofst
+                               EQU              0x20        ;PPS C Start Regist
+                                                            er (WO)
+  145 0000007C 00000024 
+                       PPSC_DUR_ofst
+                               EQU              0x24        ;PPS C Duration Reg
+                                                            ister (WO)
+  146 0000007C 00000028 
+                       PPSC_CTR_ofst
+                               EQU              0x28        ;PPS C Control Regi
+                                                            ster (WO)
+  147 0000007C         
+  148 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  149 0000007C         ;  E1/T1 Timing Registers Base Address and Registers rel
+                       ative to the Base Address
+  150 0000007C         
+  151 0000007C 00010D00 
+                       E1T1_base
+                               EQU              0x10D00     ;Base address of E1
+                                                            /T1 Registers
+  152 0000007C         
+
+
+
+ARM Macro Assembler    Page 12 
+
+
+  153 0000007C         ; E1/T1 Register offsets to base address
+  154 0000007C         
+  155 0000007C 00000000 
+                       T1_LO_ofst
+                               EQU              0x00        ;Low 16 bits of 24 
+                                                            bit F pattern (WO)
+  156 0000007C 00000004 
+                       T1_HI_ofst
+                               EQU              0x04        ;High 8 bits of 24 
+                                                            bit F pattern (WO)
+  157 0000007C 00000008 
+                       E1_B1_ofst
+                               EQU              0x08        ;Bit 1 of frames fo
+                                                            r 16 frame multifra
+                                                            me (WO)
+  158 0000007C 0000000C 
+                       E1_FB_ofst
+                               EQU              0x0C        ;Frame allignment b
+                                                            yte & non alignmemt
+                                                             byte (WO)
+  159 0000007C 00000010 
+                       E1_C0_ofst
+                               EQU              0x10        ;Frame 0 of the 16 
+                                                            frame CAS multifram
+                                                            e (WO)
+  160 0000007C 00000014 
+                       E1_C1_ofst
+                               EQU              0x14        ;CAS multiframe Fra
+                                                            me 1 to 15 data (WO
+                                                            )
+  161 0000007C 00000018 
+                       TE_SETUP_ofst
+                               EQU              0x18        ;Output configurati
+                                                            on (WO)
+  162 0000007C 0000001C 
+                       TE_STATUS_ofst
+                               EQU              0x1C        ;Interface status (
+                                                            RO)
+  163 0000007C         
+  164 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  165 0000007C         ;  Event Timer Registers Base Address and Registers rela
+                       tive to the Base Address
+  166 0000007C         
+  167 0000007C 00010E00 
+                       EVENT_base
+                               EQU              0x10E00     ;Base address of EV
+                                                            ENT TIMER Registers
+                                                            
+  168 0000007C         
+  169 0000007C         ; EVENT TIMER Register offsets to base address
+  170 0000007C         
+  171 0000007C 00000000 
+                       EV_FUNC_ofst
+                               EQU              0x00        ;Function Control r
+                                                            egister (WO)
+  172 0000007C 00000004 
+                       EV_FREQ_ofst
+                               EQU              0x04        ;Frequency Control 
+
+
+
+ARM Macro Assembler    Page 13 
+
+
+                                                            register (WO)
+  173 0000007C 00000008 
+                       EV_T1_ofst
+                               EQU              0x08        ;Timer 1 LS 16 Bits
+                                                             register (RO)
+  174 0000007C 0000000C 
+                       EV_T2_ofst
+                               EQU              0x0C        ;Timer 2 LS 16 Bits
+                                                             register  (RO)
+  175 0000007C 00000010 
+                       EV_MSB_ofst
+                               EQU              0x10        ;MS Bit of Timers a
+                                                            nd Status Bits regi
+                                                            ster (RO)
+  176 0000007C 00000014 
+                       EV_C1_ofst
+                               EQU              0x14        ;16 Bit Count for E
+                                                            vent Counter 1 (RO)
+                                                            
+  177 0000007C 00000018 
+                       EV_C2_ofst
+                               EQU              0x18        ;16 Bit Count for E
+                                                            vent Counter 2 (RO)
+                                                            
+  178 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  179 0000007C         ;  N2W (Navstar 2 Wire) Base Address and Registers relat
+                       ive to the Base Address
+  180 0000007C         
+  181 0000007C 00011000 
+                       N2W_base
+                               EQU              0x11000     ;Base address of N2
+                                                            W interface
+  182 0000007C         
+  183 0000007C         ; N2W Register offsets to base address
+  184 0000007C         
+  185 0000007C 00000000 
+                       RX2_ofst
+                               EQU              0x00        ;RX (Receive FIFO) 
+                                                            register (RO)
+  186 0000007C 00000000 
+                       TX2_ofst
+                               EQU              0x00        ;TX (Transmit FIFO)
+                                                             register (WO)
+  187 0000007C 00000004 
+                       STS_ofst
+                               EQU              0x04        ;STS (Status Regist
+                                                            er) register (RO)
+  188 0000007C 00000008 
+                       CTL_ofst
+                               EQU              0x08        ;CTL (Control Regis
+                                                            ter) register (RW)
+  189 0000007C 0000000C 
+                       CLK_ofst
+                               EQU              0x0C        ;CLK (Clock Registe
+                                                            r) register (RW)
+  190 0000007C 00000010 
+                       ADR_ofst
+                               EQU              0x10        ;ADR (Slave Address
+
+
+
+ARM Macro Assembler    Page 14 
+
+
+                                                             Register) register
+                                                             (R0)
+  191 0000007C         
+  192 0000007C         ; bit definition of N2W Status register (N2W.STS)
+  193 0000007C         
+  194 0000007C 00000001 
+                       TDI_bit EQU              0x001       ;1 = Transaction do
+                                                            ne
+  195 0000007C 00000002 
+                       DRI_bit EQU              0x002       ;1 = Transmitter ne
+                                                            eds data
+  196 0000007C 00000004 
+                       NAI_bit EQU              0x004       ;1 = No ack for las
+                                                            t transmission
+  197 0000007C 00000008 
+                       AFI_bit EQU              0x008       ;1 = Arbitration fa
+                                                            ilure
+  198 0000007C 00000010 
+                       RFF_bit EQU              0x010       ;1 = Receive FIFO f
+                                                            ull
+  199 0000007C 00000020 
+                       RFE_bit EQU              0x020       ;1 = Receive FIFO e
+                                                            mpty
+  200 0000007C 00000040 
+                       TFF_bit EQU              0x040       ;1 = Transmit FIFO 
+                                                            full
+  201 0000007C 00000080 
+                       TFE_bit EQU              0x080       ;1 = Transmit FIFO 
+                                                            empty
+  202 0000007C 00000100 
+                       ACT_bit EQU              0x100       ;1 = bus active
+  203 0000007C 00000200 
+                       SCL_bit EQU              0x200       ;SCL signal state
+  204 0000007C 00000400 
+                       SSA_bit EQU              0x400       ;SDA signal state
+  205 0000007C         
+  206 0000007C 00000001 
+                       WRITE_bit
+                               EQU              0x001       ;Write bit in addre
+                                                            ss register
+  207 0000007C         
+  208 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  209 0000007C         ;  N4W (Navstar 4 Wire) Base Address and Registers relat
+                       ive to the Base Address
+  210 0000007C         
+  211 0000007C 00011100 
+                       N4W_base
+                               EQU              0x11100     ;Base address of N4
+                                                            W interface
+  212 0000007C         
+  213 0000007C         ; N4W Register offsets to base address
+  214 0000007C         
+  215 0000007C 00000000 
+                       TX4_ofst
+                               EQU              0x00        ;TX (Transmit) regi
+                                                            ster (WO)
+  216 0000007C 00000004 
+                       RX4_ofst
+
+
+
+ARM Macro Assembler    Page 15 
+
+
+                               EQU              0x04        ;RX (Receive) regis
+                                                            ter (RO)
+  217 0000007C 00000008 
+                       MODE4_ofst
+                               EQU              0x08        ;Control register (
+                                                            WO)
+  218 0000007C 0000000C 
+                       STAT4_ofst
+                               EQU              0x0C        ;Device Status regi
+                                                            ster (RO)
+  219 0000007C         
+  220 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  221 0000007C         ; IOBUS Base Address and Registers relative to the Base 
+                       Address
+  222 0000007C         
+  223 0000007C 00011200 
+                       IOBUS_base
+                               EQU              0x11200     ;Base address of IO
+                                                            BUS
+  224 0000007C         
+  225 0000007C         ; IOBUS Register offsets to base address
+  226 0000007C         
+  227 0000007C 00000000 
+                       PA_IN_ofst
+                               EQU              0x00        ;Port A Input Statu
+                                                            s register (RO)
+  228 0000007C 00000004 
+                       PA_OUT_ofst
+                               EQU              0x04        ;Port A Output Latc
+                                                            h register (RW)
+  229 0000007C 00000008 
+                       PA_SET_ofst
+                               EQU              0x08        ;Port A Output Latc
+                                                            h Set Bits register
+                                                             (RW)
+  230 0000007C 0000000C 
+                       PA_CLR_ofst
+                               EQU              0x0C        ;Port A Output Latc
+                                                            h Clear Bits regist
+                                                            er (RW)
+  231 0000007C 00000010 
+                       PA_TGL_ofst
+                               EQU              0x10        ;Port A Output Latc
+                                                            h Toggle Bits regis
+                                                            ter (RW)
+  232 0000007C 00000014 
+                       PA_DIR_ofst
+                               EQU              0x14        ;Port A Direction r
+                                                            egister (RW)
+  233 0000007C         
+  234 0000007C 00000018 
+                       PB_IN_ofst
+                               EQU              0x18        ;Port B Input Statu
+                                                            s register (RO)
+  235 0000007C 0000001C 
+                       PB_OUT_ofst
+                               EQU              0x1C        ;Port B Output Latc
+                                                            h register (RW)
+
+
+
+ARM Macro Assembler    Page 16 
+
+
+  236 0000007C         
+  237 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  238 0000007C         ; Analog Control Registers Base Address and Registers re
+                       lative to the Base Address
+  239 0000007C         
+  240 0000007C 00011400 
+                       ANALOG_base
+                               EQU              0x11400     ;Base address of An
+                                                            alog Registers
+  241 0000007C         
+  242 0000007C         ; Analog Control Register offsets to base address
+  243 0000007C         
+  244 0000007C 00000000 
+                       ADCDATA_ofst
+                               EQU              0x00        ;ADC 10 bit Data re
+                                                            gister (R0)
+  245 0000007C 00000004 
+                       ADCCTR_ofst
+                               EQU              0x04        ;ADC Control regist
+                                                            er (RW)
+  246 0000007C 00000008 
+                       DACDATA_ofst
+                               EQU              0x08        ;DAC 10 bit Data re
+                                                            gister  (RW)
+  247 0000007C 0000000C 
+                       DACCTR_ofst
+                               EQU              0x0C        ;DAC Control regist
+                                                            er (RW)
+  248 0000007C 00000010 
+                       PLLCTR_ofst
+                               EQU              0x10        ;Phase Lock Loop Co
+                                                            ntrol register (RW)
+                                                            
+  249 0000007C         
+  250 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  251 0000007C         ; ICON (PLD) Base Address and Registers relative to the 
+                       Base Address
+  252 0000007C         
+  253 0000007C 00011800 
+                       PLD_base
+                               EQU              0x11800     ;Base address of PL
+                                                            D
+  254 0000007C         
+  255 0000007C         ; ICON (PLD) Register offsets to base address
+  256 0000007C         
+  257 0000007C 00000000 
+                       CNT_PGM_ofst
+                               EQU              0x00        ;PLD Counter Progra
+                                                            m register (WO)
+  258 0000007C 00000004 
+                       COMB_PGM_ofst
+                               EQU              0x04        ;PLD Combinatorial 
+                                                            Program register (W
+                                                            O)
+  259 0000007C 00000008 
+                       COMB_FCN0_ofst
+                               EQU              0x08        ;PLD Combinatorial 
+
+
+
+ARM Macro Assembler    Page 17 
+
+
+                                                            Function 0 register
+                                                             (WO)
+  260 0000007C 0000000C 
+                       COMB_FCN1_ofst
+                               EQU              0x0C        ;PLD Combinatorial 
+                                                            Function 1 register
+                                                             (WO)
+  261 0000007C 00000010 
+                       COMB_FCN2_ofst
+                               EQU              0x10        ;PLD Combinatorial 
+                                                            Function 2 register
+                                                             (WO)
+  262 0000007C 00000014 
+                       COMB_FCN3_ofst
+                               EQU              0x14        ;PLD Combinatorial 
+                                                            Function 3 register
+                                                             (WO)
+  263 0000007C 00000018 
+                       DEC_PGM_ofst
+                               EQU              0x18        ;PLD Decoder Block 
+                                                            Program register (W
+                                                            O)
+  264 0000007C 0000001C 
+                       CORE_PGM_ofst
+                               EQU              0x1C        ;PLD I/O Core Progr
+                                                            am register (WO)
+  265 0000007C 00000020 
+                       CELL_PGM0_ofst
+                               EQU              0x20        ;PLD I/O Cell 0 Pro
+                                                            gram register (WO)
+  266 0000007C 00000024 
+                       CELL_PGM1_ofst
+                               EQU              0x24        ;PLD I/O Cell 1 Pro
+                                                            gram register (WO)
+  267 0000007C 00000028 
+                       CELL_PGM2_ofst
+                               EQU              0x28        ;PLD I/O Cell 2 Pro
+                                                            gram register (WO)
+  268 0000007C 0000002C 
+                       CELL_PGM3_ofst
+                               EQU              0x2C        ;PLD I/O Cell 3 Pro
+                                                            gram register (WO)
+  269 0000007C 00000030 
+                       CELL_PGM4_ofst
+                               EQU              0x30        ;PLD I/O Cell 4 Pro
+                                                            gram register (WO)
+  270 0000007C 00000034 
+                       CELL_PGM5_ofst
+                               EQU              0x34        ;PLD I/O Cell 5 Pro
+                                                            gram register (WO)
+  271 0000007C 00000038 
+                       CELL_PGM6_ofst
+                               EQU              0x38        ;PLD I/O Cell 6 Pro
+                                                            gram register (WO)
+  272 0000007C 0000003C 
+                       CELL_PGM7_ofst
+                               EQU              0x3C        ;PLD I/O Cell 7 Pro
+                                                            gram register (WO)
+  273 0000007C 00000040 
+
+
+
+ARM Macro Assembler    Page 18 
+
+
+                       IN_REG_ofst
+                               EQU              0x40        ;PLD Direct Input r
+                                                            egister (WO)
+  274 0000007C         
+  275 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  276 0000007C         ; Real Time Clock (RTC) Base Addresses and Registers rel
+                       ative to the Base Addresses
+  277 0000007C         
+  278 0000007C 00013800 
+                       RTC_base
+                               EQU              0x13800     ;Base address of RT
+                                                            C
+  279 0000007C         
+  280 0000007C         ; Real Time Clock (RTC)  Register offsets to base addres
+                       s
+  281 0000007C         
+  282 0000007C 00000004 
+                       PRE_ofst
+                               EQU              0x04        ;Prescale register 
+                                                            (RO)
+  283 0000007C 00000008 
+                       CR_ofst EQU              0x08        ;Clock register (RW
+                                                            )
+  284 0000007C 00000020 
+                       SEC_ofst
+                               EQU              0x20        ;Seconds register (
+                                                            RW)
+  285 0000007C 00000024 
+                       MIN_ofst
+                               EQU              0x24        ;Minutes register (
+                                                            RW)
+  286 0000007C 00000028 
+                       HR_ofst EQU              0x28        ;Hours register (RW
+                                                            )
+  287 0000007C 0000002C 
+                       DOM_ofst
+                               EQU              0x2C        ;Day of Month regis
+                                                            ter (RW)
+  288 0000007C 00000034 
+                       DOY_ofst
+                               EQU              0x34        ;Day of Year regist
+                                                            er (RW)
+  289 0000007C 00000038 
+                       MON_ofst
+                               EQU              0x38        ;Month register (RW
+                                                            )
+  290 0000007C 0000003C 
+                       YR_ofst EQU              0x3C        ;Year register (RW)
+                                                            
+  291 0000007C         
+  292 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  293 0000007C         ; Individual GPS Channels Base Address
+  294 0000007C         
+  295 0000007C 00018000 
+                       GPSBASE1
+                               EQU              0x18000     ;GPS Channel 1 Base
+                                                             Address
+
+
+
+ARM Macro Assembler    Page 19 
+
+
+  296 0000007C 00018400 
+                       GPSBASE2
+                               EQU              0x18400     ;GPS Channel 2 Base
+                                                             Address
+  297 0000007C 00018800 
+                       GPSBASE3
+                               EQU              0x18800     ;GPS Channel 3 Base
+                                                             Address
+  298 0000007C 00018C00 
+                       GPSBASE4
+                               EQU              0x18C00     ;GPS Channel 4 Base
+                                                             Address
+  299 0000007C 00019000 
+                       GPSBASE5
+                               EQU              0x19000     ;GPS Channel 5 Base
+                                                             Address
+  300 0000007C 00019400 
+                       GPSBASE6
+                               EQU              0x19400     ;GPS Channel 6 Base
+                                                             Address
+  301 0000007C 00019800 
+                       GPSBASE7
+                               EQU              0x19800     ;GPS Channel 7 Base
+                                                             Address
+  302 0000007C 00019C00 
+                       GPSBASE8
+                               EQU              0x19C00     ;GPS Channel 8 Base
+                                                             Address
+  303 0000007C 0001A000 
+                       GPSBASE9
+                               EQU              0x1A000     ;GPS Channel 9 Base
+                                                             Address
+  304 0000007C 0001A400 
+                       GPSBASE10
+                               EQU              0x1A400     ;GPS Channel 10 Bas
+                                                            e Address
+  305 0000007C 0001A800 
+                       GPSBASE11
+                               EQU              0x1A800     ;GPS Channel 11 Bas
+                                                            e Address
+  306 0000007C 0001AC00 
+                       GPSBASE12
+                               EQU              0x1AC00     ;GPS Channel 12 Bas
+                                                            e Address
+  307 0000007C 0001B000 
+                       GPSBASE13
+                               EQU              0x1B000     ;Virtual Chan 13 Ba
+                                                            se Adr (Chan 11 ext
+                                                            ensions)
+  308 0000007C 0001B400 
+                       GPSBASE14
+                               EQU              0x1B400     ;Virtual Chan 14 Ba
+                                                            se Adr (Chan 12 ext
+                                                            ensions)
+  309 0000007C 0001BC00 
+                       GPSBASE16
+                               EQU              0x1BC00     ;Virtual Chan 16 Ba
+                                                            se Adr (All chans i
+                                                            n parallel)
+
+
+
+ARM Macro Assembler    Page 20 
+
+
+  310 0000007C         
+  311 0000007C 00000400 
+                       CHAN_SPACING
+                               EQU              GPSBASE2-GPSBASE1 
+                                                            ;Channel Spacing
+  312 0000007C         
+  313 0000007C         ; (Note GPSBASE15 contains setup registers and is define
+                       d later)
+  314 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  315 0000007C         ; Offset of Individual GPS Channel registers relative to
+                        the Channel Base Address
+  316 0000007C         
+  317 0000007C 00000000 
+                       TEST_ofst
+                               EQU              0x00        ;Channel Test regis
+                                                            ter (WO)
+  318 0000007C 00000018 
+                       CAFREQ_ofst
+                               EQU              0x18        ;Carrier NCO Freque
+                                                            ncy register (WO)
+  319 0000007C 0000001C 
+                       CAPHASE_ofst
+                               EQU              0x1C        ;Carrier NCO Phase 
+                                                            register (WO)
+  320 0000007C 00000020 
+                       COPHASE_ofst
+                               EQU              0x20        ;Coder NCO Phase re
+                                                            gister (WO)
+  321 0000007C 00000024 
+                       G1G2CODE_ofst
+                               EQU              0x24        ;Coder G1/G2 Code r
+                                                            egister (WO)
+  322 0000007C 00000028 
+                       G1G2TAPS_ofst
+                               EQU              0x28        ;Coder G1/G2 Taps r
+                                                            egister (WO)
+  323 0000007C 0000002C 
+                       CODEMODE_ofst
+                               EQU              0x2C        ;Channel Control re
+                                                            gister (WO)
+  324 0000007C 00000030 
+                       MASKI_ofst
+                               EQU              0x30        ;Coder (E-L) I Mask
+                                                             register (WO)
+  325 0000007C 00000034 
+                       MASKQ_ofst
+                               EQU              0x34        ;Coder (E-L) Q Mask
+                                                             (register WO)
+  326 0000007C 00000038 
+                       MASKP_ofst
+                               EQU              0x38        ;Coder Prompt Mask 
+                                                            register (WO)
+  327 0000007C 0000003C 
+                       MASKM_ofst
+                               EQU              0x3C        ;Coder Setup Mask r
+                                                            egister (WO)
+  328 0000007C 00000030 
+                       PRMTI_ofst
+
+
+
+ARM Macro Assembler    Page 21 
+
+
+                               EQU              0x30        ;Correlator I Promp
+                                                            t register (RO)
+  329 0000007C 00000034 
+                       PRMTQ_ofst
+                               EQU              0x34        ;Correlator Q Promp
+                                                            t register (RO)
+  330 0000007C 00000038 
+                       EMLI_ofst
+                               EQU              0x38        ;Correlator I Early
+                                                            -Late register (RO)
+                                                            
+  331 0000007C 0000003C 
+                       EMLQ_ofst
+                               EQU              0x3C        ;Correlator Q Early
+                                                            -Late register (RO)
+                                                            
+  332 0000007C         
+  333 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  334 0000007C         ; Offset of registers specific to virtual channels 13 an
+                        14 relative to the
+  335 0000007C         ; Channel Base Address
+  336 0000007C         
+  337 0000007C 00000030 
+                       PRMTIO_ofst
+                               EQU              0x30        ;I Prompt reg with 
+                                                            offset accumulation
+                                                             time (RO)
+  338 0000007C 00000034 
+                       PRMTQO_ofst
+                               EQU              0x34        ;Q Prompt reg with 
+                                                            offset accumulation
+                                                             time (RO)
+  339 0000007C 00000038 
+                       EMLIO_ofst
+                               EQU              0x38        ;I Early-Late reg w
+                                                            ith offset accumula
+                                                            tion time (RO)
+  340 0000007C 0000003C 
+                       EMLQO_ofst
+                               EQU              0x3C        ;I Early-Late reg w
+                                                            ith offset accumula
+                                                            tion time (RO)
+  341 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  342 0000007C         ;  GPS Setup Function Registers as offsets to the Base A
+                       ddress of channel 15
+  343 0000007C         
+  344 0000007C 0001B800 
+                       GPSBASE15
+                               EQU              0x1B800     ;GPS Channel 15 Bas
+                                                            e Address (setup fu
+                                                            nctions)
+  345 0000007C         
+  346 0000007C 00000020 
+                       COPZEROA_ofst
+                               EQU              0x20        ;Common Coder NCO #
+                                                            A Zero (WO)
+  347 0000007C 00000024 
+
+
+
+ARM Macro Assembler    Page 22 
+
+
+                       COFREQA_ofst
+                               EQU              0x24        ;Common Coder NCO #
+                                                            A Frequency (WO)
+  348 0000007C 00000028 
+                       COPZEROB_ofst
+                               EQU              0x28        ;Common Coder NCO #
+                                                            B Zero (WO)
+  349 0000007C 0000002C 
+                       COFREQB_ofst
+                               EQU              0x2C        ;Common Coder NCO #
+                                                            B Frequency (WO)
+  350 0000007C 00000030 
+                       CONTROL_ofst
+                               EQU              0x30        ;GPS I/O Setup regi
+                                                            ster (RW)
+  351 0000007C 00000034 
+                       OSCOUNT2_ofst
+                               EQU              0x34        ;Chan 12 mS offset 
+                                                            register (RW)
+  352 0000007C 00000038 
+                       OSCOUNT1_ofst
+                               EQU              0x38        ;Chan 11 mS offset 
+                                                            register (RW)
+  353 0000007C 0000003C 
+                       MSCOUNT_ofst
+                               EQU              0x3C        ;mS Period Programm
+                                                            ing Write register 
+                                                            (RW)
+  354 0000007C         
+  355 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  356 0000007C         ;
+  357 0000007C         ; AEB1 Specific Definitions
+  358 0000007C         ;
+  359 0000007C         ;LSRAM_BASE  EQU    0x00000000
+  360 0000007C         ;LSRAM_LIMIT EQU    0x00000800
+  361 0000007C         
+  362 0000007C         ;SRAM_BASE   EQU    0x00400000
+  363 0000007C 00405FFC 
+                       SRAM_LIMIT
+                               EQU              0x00405FFC
+  364 0000007C         
+  365 0000007C 00405FFC 
+                       IRQ_STACK
+                               EQU              SRAM_LIMIT  ;IRQ: 0x004077Ff- 0
+                                                            x00407FFC
+  366 0000007C 00405DFC 
+                       FIQ_STACK
+                               EQU              IRQ_STACK-512 ;//            ;F
+                                                            IQ: 0x00406fFf- 0x0
+                                                            04077Ff
+  367 0000007C 004059FC 
+                       SVC_STACK
+                               EQU              FIQ_STACK-1024 ;//            ;
+                                                            SVC: 0x004063Ff -0x
+                                                            00406fFf
+  368 0000007C 004051FC 
+                       USR_STACK
+                               EQU              SVC_STACK-1024*2 ;USER:
+
+
+
+ARM Macro Assembler    Page 23 
+
+
+  369 0000007C 004051F0 
+                       SYS_STACK
+                               EQU              USR_STACK-12
+  370 0000007C         
+  371 0000007C         
+  372 0000007C         ;;;;
+  373 0000007C         ;0x00407FFC   --32K
+  374 0000007C         ;0x00407bfc   --31K (0x407ed0--0x407FFC)==0x12c=300
+  375 0000007C         ;0x004077fc   --30K 
+  376 0000007C         ;0x004073fc   --29K (0x407a90--0x00407bfc)=0x16c=364
+  377 0000007C         ;0x00406ffc   --28K (0x4070b0--0x004073fc)=0x34c=844
+  378 0000007C         ;0x00406bfc   --27K
+  379 0000007C         ;0x004067fc   --26K   
+  380 0000007C         
+  381 0000007C         
+  382 0000007C                 EXPORT           IRQ_STACK
+  383 0000007C                 EXPORT           FIQ_STACK
+  384 0000007C                 EXPORT           SVC_STACK
+  385 0000007C                 EXPORT           USR_STACK
+  386 0000007C         ;
+  387 0000007C         ; Chimera Function Implementations
+  388 0000007C         ;
+  389 0000007C         
+  390 0000007C         ;
+  391 0000007C         ; FUNCTION:     _SYSboot_Setup_Target_Specific
+  392 0000007C         ; DESCRIPTION:  Any target specific initialisation or se
+                       tup code
+  393 0000007C         ;               
+  394 0000007C         _SYSboot_Setup_Target_Specific
+  395 0000007C         ;-------------------------------------------------------
+                       ---------------------
+  396 0000007C         ;  Initialise External Device Setup Registers
+  397 0000007C         
+  398 0000007C E3A01801        ldr              r1,=ROML0S  ;ROM CS 0 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+  399 00000080 E3A00025        ldr              r0,=0x0025  ;(def=0x0017) 5 wai
+                                                            t states, 32 bit de
+                                                            vice
+  400 00000084 E1C100B0        strh             r0,[r1]
+  401 00000088         
+  402 00000088 E59F1174        ldr              r1,=ROML1S  ;ROM CS 1 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+  403 0000008C E3A00013        ldr              r0,=0x0013  ;(def=0x0017) 3 wai
+                                                            t states, 16 bit de
+                                                            vice
+  404 00000090 E1C100B0        strh             r0,[r1]
+  405 00000094         
+  406 00000094 E59F116C        ldr              r1,=RAMLS   ;RAM CS   setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+  407 00000098 E3A00021        ldr              r0,=0x0021  ;(def=0x0017) 1 wai
+                                                            t state, 32 bit dev
+                                                            ice
+  408 0000009C E1C100B0        strh             r0,[r1]
+  409 000000A0         
+  410 000000A0 E59F1164        ldr              r1,=EXL0S   ;EXT CS 0 setup, si
+                                                            ze and wait state r
+
+
+
+ARM Macro Assembler    Page 24 
+
+
+                                                            egister (RW)
+  411 000000A4 E3A000E5        ldr              r0,=0x00E5  ;EXL0S and EXL1S we
+                                                            re both 0x00E7
+  412 000000A8 E1C100B0        strh             r0,[r1]
+  413 000000AC         
+  414 000000AC E59F115C        ldr              r1,=EXL1S   ;EXT CS 1 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+  415 000000B0 E3A000E5        ldr              r0,=0x00E5  ;(def=0x0057) 5 wai
+                                                            t state, 32 bit dev
+                                                            ice
+  416 000000B4 E1C100B0        strh             r0,[r1]
+  417 000000B8         
+  418 000000B8 E59F1154        ldr              r1,=EXL2S   ;EXT CS 2 setup, si
+                                                            ze and wait state r
+                                                            egister (RW)
+  419 000000BC E3A00057        ldr              r0,=0x0057  ;(def=0x0057) <no d
+                                                            evice fitted> (reco
+                                                            very enabled)
+  420 000000C0 E1C100B0        strh             r0,[r1]
+  421 000000C4         
+  422 000000C4 E1A0F00E        MOV              PC, LR
+  423 000000C8         
+  424 000000C8         ;
+  425 000000C8         ; FUNCTION:     _SYSboot_Map_Flash_High
+  426 000000C8         ; DESCRIPTION:  Remap flash from 0x00000000 (boot addres
+                       s) to high memory
+  427 000000C8         ;
+  428 000000C8         _SYSboot_Map_Flash_High
+  429 000000C8 E1A0F00E        MOV              PC, LR
+  430 000000CC         
+  431 000000CC         ;
+  432 000000CC         ; FUNCTION:     _SYSboot_Config_LSRAM_Cache
+  433 000000CC         ; DESCRIPTION:  Setup any on-chip SRAM or cache
+  434 000000CC         ;
+  435 000000CC         _SYSboot_Config_LSRAM_Cache
+  436 000000CC E1A0F00E        MOV              PC, LR
+  437 000000D0         
+  438 000000D0         
+  439 000000D0         ;
+  440 000000D0         ; FUNCTION:     _SYSboot_Map_SRAM_Low
+  441 000000D0         ; DESCRIPTION:  Map SRAM in Low Memory
+  442 000000D0         ;
+  443 000000D0         _SYSboot_Map_SRAM_Low
+  444 000000D0 E59F1140        ldr              r1,=RMAP    ;REMAP mode registe
+                                                            r (RW)
+  445 000000D4 E3A00002        ldr              r0,=0x0002  ;(def=0x000M) 0002 
+                                                            = on-chip RAM
+  446 000000D8 E1C100B0        strh             r0,[r1]     ;(where M=MAPMODE p
+                                                            ins [2 ls bits only
+                                                            ])
+  447 000000DC E1A0F00E        MOV              PC, LR
+  448 000000E0         
+  449 000000E0         ;
+  450 000000E0         ; FUNCTION:     _SYSboot_Setup_Stacks_Disable_Intr
+  451 000000E0         ; DESCRIPTION:  Setup stack pointers for IRQ Mode, FIQ M
+                       ode, SVC Mode 
+  452 000000E0         ;               ensuring all the time that IRQ and FIQ a
+                       re disabled
+
+
+
+ARM Macro Assembler    Page 25 
+
+
+  453 000000E0         ;
+  454 000000E0         _SYSboot_Setup_Stacks_Disable_Intr
+  455 000000E0 E59F0134        LDR              R0, =0xDEADBEEF
+  456 000000E4 E59F1134        LDR              R1, =USR_STACK
+  457 000000E8 E5810000        STR              R0, [R1]
+  458 000000EC         
+  459 000000EC E3A000D2        MOV              R0, #MODE_IRQ:OR:I_BIT:OR:F_BIT
+  460 000000F0 E121F000        MSR              CPSR_c, R0
+  461 000000F4 E59FD128        LDR              R13, =IRQ_STACK
+  462 000000F8         
+  463 000000F8 E3A000D1        MOV              R0, #MODE_FIQ:OR:I_BIT:OR:F_BIT
+  464 000000FC E121F000        MSR              CPSR_c, R0
+  465 00000100 E59FD120        LDR              R13, =FIQ_STACK
+  466 00000104 E59F0110        LDR              R0, =0xDEADBEEF
+  467 00000108 E58D0000        STR              R0, [R13]
+  468 0000010C         
+  469 0000010C E3A000DF        MOV              R0, #MODE_SYS:OR:I_BIT:OR:F_BIT
+  470 00000110 E121F000        MSR              CPSR_c, R0
+  471 00000114 E59FD110        LDR              R13, =SYS_STACK
+  472 00000118 E59F00FC        LDR              R0, =0xDEADBEEF
+  473 0000011C E58D0000        STR              R0, [R13]
+  474 00000120         
+  475 00000120 E3A000D3        MOV              R0, #MODE_SVC:OR:I_BIT:OR:F_BIT
+  476 00000124 E121F000        MSR              CPSR_c, R0
+  477 00000128 E59FD100        LDR              R13, =SVC_STACK
+  478 0000012C E59F00E8        LDR              R0, =0xDEADBEEF
+  479 00000130 E58D0000        STR              R0, [R13]
+  480 00000134 E1A0F00E        MOV              PC, LR
+  481 00000138                 END
+  179 00000138         
+  180 00000138         ; ******************************************************
+                       ****************
+  181 00000138         
+  182 00000138         ;
+  183 00000138         ; FUNCTION:     _SYSboot_Copy_CODE_To_SRAM
+  184 00000138         ; DESCRIPTION:  copy main stack code from FLASH/ROM to S
+                       RAM
+  185 00000138         ;
+  186 00000138         _SYSboot_Copy_CODE_To_SRAM
+  187 00000138         
+  188 00000138                 IMPORT           |Load$$RAM$$Base|, WEAK ; Load 
+                                                            Addr of RAM (RW) 
+  189 00000138                 IMPORT           |Image$$RAM$$Base|, WEAK ; Exec
+                                                             Addr of RAM (RW)
+  190 00000138                 IMPORT           |Image$$RAM$$Length|, WEAK ; Le
+                                                            ngth of RAM Exec (R
+                                                            W)
+  191 00000138         
+  192 00000138 E59F00F4        LDR              R0, =|Load$$RAM$$Base|
+  193 0000013C E59F10F4        LDR              R1, =|Image$$RAM$$Base|
+  194 00000140 E1A02001        MOV              R2, R1
+  195 00000144 E59F40F0        LDR              R4, =|Image$$RAM$$Length|
+  196 00000148 E0822004        ADD              R2, R2, R4
+  197 0000014C         _copy                                ; block copy functi
+                                                            on
+  198 0000014C E1510002        CMP              r1, r2
+  199 00000150 34903004        LDRLO            R3, [r0], #4
+  200 00000154 34813004        STRLO            R3, [r1], #4
+  201 00000158 3AFFFFFB        BLO              _copy
+
+
+
+ARM Macro Assembler    Page 26 
+
+
+  202 0000015C E1A0F00E        MOV              PC, LR
+  203 00000160         
+  204 00000160 E3A00001        mov              r0,#1
+  205 00000164         
+  206 00000164         
+  207 00000164         _SYSboot_Power_Down
+  208 00000164 E52DE004        STR              lr, [sp, #-4]!
+  209 00000168 E3A00502        MOV              R0,#0x00800000
+  210 0000016C E5901004        LDR              R1,[R0,#0x0004]
+  211 00000170 E3811001        ORR              R1,R1,#00000001
+  212 00000174 E5801004        STR              R1,[R0,#0x0004]
+  213 00000178         
+  214 00000178 E3A00000        MOV              R0,#0
+  215 0000017C EE070F90        MCR              p15,0,R0,c7,c0,4
+  216 00000180 E1A00000        NOP
+  217 00000184 E1A00000        NOP
+  218 00000188 E1A00000        NOP
+  219 0000018C E1A00000        NOP
+  220 00000190 E1A00000        NOP
+  221 00000194 E1A00000        NOP
+  222 00000198 E1A00000        NOP
+  223 0000019C E1A00000        NOP
+  224 000001A0 E1A00000        NOP
+  225 000001A4 E1A00000        NOP
+  226 000001A8 E1A00000        NOP
+  227 000001AC E1A00000        NOP
+  228 000001B0 E1A00000        NOP
+  229 000001B4 E1A00000        NOP
+  230 000001B8 E1A00000        NOP
+  231 000001BC E1A00000        NOP
+  232 000001C0 E49DF004        LDR              pc, [sp], #4
+  233 000001C4         
+  234 000001C4         
+  235 000001C4         ;MOV PC, LR
+  236 000001C4         ;
+  237 000001C4         ; Generic ARM routines to setup the LSRAM and SRAM and j
+                       ump into C code
+  238 000001C4         ;
+  239 000001C4         
+  240 000001C4         ; FUNCTION:     _SYSboot_ZI_Init
+  241 000001C4         ; DESCRIPTION:  Initialise Zero-Init Data Segment
+  242 000001C4         ;
+  243 000001C4         
+  244 000001C4         _SYSboot_ZI_Init
+  245 000001C4         
+  246 000001C4                 IMPORT           |Image$$RAM$$ZI$$Base| ; Exec A
+                                                            ddr of RAM (ZI)
+  247 000001C4                 IMPORT           |Image$$RAM$$ZI$$Length| ; Leng
+                                                            th of RAM Exec (ZI)
+                                                            
+  248 000001C4         
+  249 000001C4 E59F2074        LDR              R2, =|Image$$RAM$$ZI$$Length|
+  250 000001C8 E59F0074        LDR              R0, =|Image$$RAM$$ZI$$Base|
+  251 000001CC E1A01000        MOV              R1, R0
+  252 000001D0 E0811002        ADD              R1, R1, R2
+  253 000001D4 E3A02000        MOV              R2, #0
+  254 000001D8         _ZI_Loop
+  255 000001D8 E1500001        CMP              R0, R1
+  256 000001DC 34802004        STRLO            R2, [R0], #4
+
+
+
+ARM Macro Assembler    Page 27 
+
+
+  257 000001E0 3AFFFFFC        BLO              _ZI_Loop
+  258 000001E4 E1A0F00E        MOV              PC, LR
+  259 000001E8         
+  260 000001E8         
+  261 000001E8         
+  262 000001E8         
+  263 000001E8         
+  264 000001E8         
+  265 000001E8                 EXPORT           __user_initial_stackheap
+  266 000001E8         
+  267 000001E8         
+  268 000001E8         __user_initial_stackheap
+  269 000001E8 E59F0058        LDR              r0,=bottom_of_heap
+  270 000001EC E1A0F00E        MOV              pc,lr
+  271 000001F0         
+  272 000001F0         
+  273 000001F0         __rt_div0
+  274 000001F0 EAFFFFFE        B                __rt_div0
+  275 000001F4         
+  276 000001F4 00000000 
+              00000000 
+              00000000 
+              00000000 
+              00010004 
+              00010008 
+              0001000C 
+              00010010 
+              00010014 
+              00010308 
+              DEADBEEF 
+              004051FC 
+              00405FFC 
+              00405DFC 
+              004051F0 
+              004059FC 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000         AREA             Myheap, DATA, NOINIT, ALIGN=2
+  277 00000000         bottom_of_heap
+                               SPACE            256         ;
+  278 00000100         
+  279 00000100         
+  280 00000100         
+  281 00000100                 END
+Command Line: --debug --diag_suppress=9931 --cpu=ARM9E --apcs=interwork --depen
+d=.\obj\sys_boot.d -o.\obj\sys_boot.o -I.\src\Core\include -I.\src\BKTestApp\in
+clude -I.\src\API\include -Id:\Keil_v5\ARM\RV31\INC -Id:\Keil_v5\ARM\CMSIS\Incl
+ude --predefine="__UVISION_VERSION SETA 514" --list=.\obj\sys_boot.lst src\hal\
+prth_chimera\sys\sys_boot.s

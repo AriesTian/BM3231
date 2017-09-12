@@ -1,0 +1,497 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.14.2
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: ARM9, Microsoft, LIC=GMZ74-F2FKN-5TH3W-Q0NZM-T05QX-AVNUP
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.13.0.0
+Toolchain Path:  d:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARM.DLL V5.13.0.0
+Dialog DLL:      DARMP3.DLL
+Target DLL:      Segger\JLTAgdi.dll V1.59.0.0
+Dialog DLL:      TARMP3.DLL V1.02
+ 
+<h2>Project:</h2>
+E:\keil project\BK3231\BK3231S_designkit_V1.91\BK3231S_Test_Firmware.uvproj
+Project File Date:  08/30/2017
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.05 update 1 (build 106)', folder: 'd:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+Clean started - Project: 'BK3231S_Test_Firmware'
+   deleting intermediate output files for target 'Target 1'
+assembling sys_boot.s...
+src\hal\prth_chimera\sys\sys_boot.s(29): warning: A1757W: Symbol attributes must be within square brackets; Any other syntax is deprecated
+src\hal\prth_chimera\sys\sys_boot.s(32): warning: A1757W: Symbol attributes must be within square brackets; Any other syntax is deprecated
+src\hal\prth_chimera\sys\sys_boot.s(33): warning: A1757W: Symbol attributes must be within square brackets; Any other syntax is deprecated
+src\hal\prth_chimera\sys\sys_boot.s(40): warning: A1757W: Symbol attributes must be within square brackets; Any other syntax is deprecated
+src\hal\prth_chimera\sys\sys_boot.s(188): warning: A1757W: Symbol attributes must be within square brackets; Any other syntax is deprecated
+src\hal\prth_chimera\sys\sys_boot.s(189): warning: A1757W: Symbol attributes must be within square brackets; Any other syntax is deprecated
+src\hal\prth_chimera\sys\sys_boot.s(190): warning: A1757W: Symbol attributes must be within square brackets; Any other syntax is deprecated
+src\hal\prth_chimera\sys\sys_boot_chimera.s(422): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+   included by GET/INCLUDE directive from (178): warning: 
+   included by GET/INCLUDE directive from : 
+src\hal\prth_chimera\sys\sys_boot_chimera.s(429): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+   included by GET/INCLUDE directive from (178): warning: 
+   included by GET/INCLUDE directive from : 
+src\hal\prth_chimera\sys\sys_boot_chimera.s(436): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+   included by GET/INCLUDE directive from (178): warning: 
+   included by GET/INCLUDE directive from : 
+src\hal\prth_chimera\sys\sys_boot_chimera.s(447): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+   included by GET/INCLUDE directive from (178): warning: 
+   included by GET/INCLUDE directive from : 
+src\hal\prth_chimera\sys\sys_boot_chimera.s(480): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+   included by GET/INCLUDE directive from (178): warning: 
+   included by GET/INCLUDE directive from : 
+src\hal\prth_chimera\sys\sys_boot.s(202): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_boot.s(258): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_boot.s(270): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+assembling sys_fiq_irq.s...
+src\hal\prth_chimera\sys\sys_fiq_irq.s(60): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_fiq_irq.s(68): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_fiq_irq.s(76): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_fiq_irq.s(85): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_fiq_irq.s(111): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_fiq_irq.s(135): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+src\hal\prth_chimera\sys\sys_fiq_irq.s(158): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
+creating preprocessor file for sys_irq.c...
+compiling sys_irq.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\hal\prth_chimera\sys\sys_irq.c(402): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(402): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(402): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(423): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(423): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(423): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(449): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(449): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(449): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(472): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(472): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(472): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(565): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(565): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(565): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(589): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(589): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(589): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(612): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(612): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(612): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #1267-D: Implicit physical register R4 should be defined as a variable
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c: 28 warnings, 0 errors
+creating preprocessor file for hw_radio.c...
+compiling hw_radio.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\hal\hw\radio\bk3011\hw_radio.c: 3 warnings, 0 errors
+creating preprocessor file for beken_process.c...
+compiling beken_process.c...
+creating preprocessor file for sys_mmi.c...
+compiling sys_mmi.c...
+creating preprocessor file for sys_hal_config.c...
+compiling sys_hal_config.c...
+creating preprocessor file for hw_memcpy_impl.c...
+compiling hw_memcpy_impl.c...
+creating preprocessor file for sys_mmap.c...
+compiling sys_mmap.c...
+creating preprocessor file for sys_init.c...
+compiling sys_init.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\hal\prth_chimera\sys\sys_init.c: 3 warnings, 0 errors
+creating preprocessor file for sys_power.c...
+compiling sys_power.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\hal\prth_chimera\sys\sys_power.c(54): warning:  #1295-D: Deprecated declaration _SYSboot_Power_Down - give arg types
+  void   _SYSboot_Power_Down();
+src\hal\prth_chimera\sys\sys_power.c(233): warning:  #223-D: function "ARM_Enter_Light_mode" declared implicitly
+          ARM_Enter_Light_mode();
+src\hal\prth_chimera\sys\sys_power.c(45): warning:  #550-D: variable "LowFrequencyOscillatorAvailable" was set but never used
+  static u_int8 LowFrequencyOscillatorAvailable = 0;
+src\hal\prth_chimera\sys\sys_power.c: 6 warnings, 0 errors
+creating preprocessor file for hw_codec.c...
+compiling hw_codec.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+src\hal\prth_chimera\hw\hw_codec.c: 2 warnings, 0 errors
+creating preprocessor file for main.c...
+compiling main.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\App\main.c(46): warning:  #223-D: function "delay_ms" declared implicitly
+      delay_ms(2);
+src\App\main.c(79): warning:  #223-D: function "readLinkNum" declared implicitly
+        readLinkNum();
+src\App\main.c(66): warning:  #177-D: variable "i" was declared but never referenced
+      u_int32 flags,i;
+src\App\main.c(116): warning:  #223-D: function "Host_Loop" declared implicitly
+        Host_Loop();
+src\App\main.c(135): warning:  #223-D: function "LMscan_Write_Scan_Enable" declared implicitly
+          LMscan_Write_Scan_Enable(3);
+src\App\main.c(136): warning:  #188-D: enumerated type mixed with another type
+          BTtst_Set_DUT_Mode(1);
+src\App\main.c(148): warning:  #223-D: function "BTms_Sched" declared implicitly
+          BTms_Sched();
+src\App\main.c: 10 warnings, 0 errors
+creating preprocessor file for config.c...
+compiling config.c...
+creating preprocessor file for DeviceBtj_Handler.c...
+compiling DeviceBtj_Handler.c...
+src\App\DeviceBtj_Handler.c(489): warning:  #223-D: function "readBtLinkInfo" declared implicitly
+                readBtLinkInfo(linkkey_buff, 0);
+src\App\DeviceBtj_Handler.c(538): warning:  #223-D: function "writeLinkNum" declared implicitly
+                                writeLinkNum(i);
+src\App\DeviceBtj_Handler.c(559): warning:  #111-D: statement is unreachable
+                                                bprintf("continue!\n");
+src\App\DeviceBtj_Handler.c(610): warning:  #223-D: function "readBtLinkInfo" declared implicitly
+                        readBtLinkInfo(linkkey_buff, i);
+src\App\DeviceBtj_Handler.c(628): warning:  #223-D: function "readLinkNum" declared implicitly
+                                linkNum = readLinkNum();
+src\App\DeviceBtj_Handler.c(635): warning:  #111-D: statement is unreachable
+                        if((linkNum != i) && (linkNum == num - 1))
+src\App\DeviceBtj_Handler.c(637): warning:  #223-D: function "readLinkNum" declared implicitly
+                                linkNum = readLinkNum();
+src\App\DeviceBtj_Handler.c(662): warning:  #223-D: function "writeBtLinkInfo" declared implicitly
+                        writeBtLinkInfo(linkkey_buff, linkNum);
+src\App\DeviceBtj_Handler.c(686): warning:  #167-D: argument of type "u_int32 *" is incompatible with parameter of type "volatile uint32 *"
+              uart_buff_send((volatile u_int8**)&MsgBuffer, (u_int32*)&MsgLength);
+src\App\DeviceBtj_Handler.c(991): warning:  #223-D: function "uart_callback" declared implicitly
+                  uart_callback(uart_rx_tx_buff + uart_rx_buff_tailor, temp_data_len);
+src\App\DeviceBtj_Handler.c(1003): warning:  #223-D: function "uart_callback" declared implicitly
+                      uart_callback(uart_rx_tx_buff + uart_rx_buff_tailor, temp_data_len);
+src\App\DeviceBtj_Handler.c(1010): warning:  #223-D: function "uart_callback" declared implicitly
+                      uart_callback(uart_rx_tx_buff + uart_rx_buff_tailor, temp_data_len);
+src\App\DeviceBtj_Handler.c(1047): warning:  #223-D: function "SPI_transmit_data" declared implicitly
+                        SPI_transmit_data(spi_tx_data, spi_rx_data, 1);
+src\App\DeviceBtj_Handler.c(1043): warning:  #177-D: variable "i" was declared but never referenced
+                        uint8 i;
+src\App\DeviceBtj_Handler.c(1123): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "BTPBYTE"
+                    if(DeviceRfc_Send(&btj_adapter, &spp_service, uart_send_buff, uart_send_length))
+src\App\DeviceBtj_Handler.c(1130): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "BTPBYTE"
+                                if(DeviceRfc_Send(&btj_adapter, &spp_service, spi_rx_data, spi_rx_buff_len))
+src\App\DeviceBtj_Handler.c(973): warning:  #177-D: variable "uart_rx_buff_cnt_temp" was declared but never referenced
+        static u_int8 uart_rx_buff_cnt_temp;
+src\App\DeviceBtj_Handler.c(1308): warning:  #940-D: missing return statement at end of non-void function "getATCommand"
+  }
+src\App\DeviceBtj_Handler.c: 18 warnings, 0 errors
+creating preprocessor file for DeviceBtj_Stack_Sdpdb.c...
+compiling DeviceBtj_Stack_Sdpdb.c...
+creating preprocessor file for driver_flash.c...
+compiling driver_flash.c...
+src\Driver\driver_flash.c(276): warning:  #223-D: function "memcpy" declared implicitly
+              memcpy(&buffer[k],buf,32);
+src\Driver\driver_flash.c(298): warning:  #223-D: function "memcpy" declared implicitly
+              memcpy(buf,&buffer[k],32);
+src\Driver\driver_flash.c(467): warning:  #223-D: function "SYSirq_Disable_Interrupts_Save_Flags" declared implicitly
+        SYSirq_Disable_Interrupts_Save_Flags(&cpu_flags);
+src\Driver\driver_flash.c(499): warning:  #223-D: function "SYSirq_Interrupts_Restore_Flags" declared implicitly
+        SYSirq_Interrupts_Restore_Flags(cpu_flags);
+src\Driver\driver_flash.c(465): warning:  #177-D: variable "temp0" was declared but never referenced
+        uint32 temp0 = 0;
+src\Driver\driver_flash.c(540): warning:  #223-D: function "memcpy" declared implicitly
+      memcpy(&temp_buff[0],buff1,28);
+src\Driver\driver_flash.c(537): warning:  #177-D: variable "i" was declared but never referenced
+      uint8 temp_buff[60],i;
+src\Driver\driver_flash.c(557): warning:  #177-D: variable "i" was declared but never referenced
+      uint8 temp_buff[60],i;
+src\Driver\driver_flash.c(582): warning:  #223-D: function "memcpy" declared implicitly
+      memcpy(buff1,&temp_buff[0],28);
+src\Driver\driver_flash.c(598): warning:  #177-D: variable "env_config" was declared but never referenced
+        ENV_CONFIG_P env_config=(ENV_CONFIG_P)config_buff;
+src\Driver\driver_flash.c(636): warning:  #550-D: variable "state" was set but never used
+        uint8 state = 0;
+src\Driver\driver_flash.c: 11 warnings, 0 errors
+creating preprocessor file for driver_gpio.c...
+compiling driver_gpio.c...
+creating preprocessor file for driver_icu.c...
+compiling driver_icu.c...
+creating preprocessor file for driver_timer.c...
+compiling driver_timer.c...
+src\Driver\driver_timer.c(212): warning:  #223-D: function "LSLCslot_Handle_AUX_TIM" declared implicitly
+          LSLCslot_Handle_AUX_TIM();
+src\Driver\driver_timer.c: 1 warning, 0 errors
+creating preprocessor file for driver_uart.c...
+compiling driver_uart.c...
+src\Driver\driver_uart.c(163): warning:  #550-D: variable "fifo" was set but never used
+      u_int8 fifo[UART_BUFF_LEN], i = 0;
+src\Driver\driver_uart.c(195): warning:  #676-D: using out-of-scope declaration of variable "sys_hcit_uart_info" (declared at line 35 of ".\src\Core\transport\include\tra_uart_impl.h")
+      sys_hcit_uart_info.common.type = TRA_HCIT_TYPE_UART;
+src\Driver\driver_uart.c(204): warning:  #513-D: a value of type "void (*)(volatile uint8 **, volatile uint32 *)" cannot be assigned to an entity of type "void (*)(volatile u_int8 **, volatile u_int32 *)"
+      sys_hcit_uart_info.poll_tx = uart_buff_send;
+src\Driver\driver_uart.c: 3 warnings, 0 errors
+creating preprocessor file for driver_WDT.c...
+compiling driver_WDT.c...
+creating preprocessor file for driver_xvr.c...
+compiling driver_xvr.c...
+creating preprocessor file for driver_adc.c...
+compiling driver_adc.c...
+creating preprocessor file for Driver_spi.c...
+compiling Driver_spi.c...
+linking...
+.\obj\BK3231S_Test_Firmware.axf: Warning: L6413W: Disabling merging for devicebtj_stack_sdpdb.o(.conststring), Section contains misaligned string(s).
+Program Size: Code=161852 RO-data=4848 RW-data=1064 ZI-data=14536  
+Finished: 0 information, 1 warning and 0 error messages.
+".\obj\BK3231S_Test_Firmware.axf" - 0 Error(s), 113 Warning(s).
+
+*** Performing Cross-Module-Optimization:
+compiling sys_irq.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\hal\prth_chimera\sys\sys_irq.c(402): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(402): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(402): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(423): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(423): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(423): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(449): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(449): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(449): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+            MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(472): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(472): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(472): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(565): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(565): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(565): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(589): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(589): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(589): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+        MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(612): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(612): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(612): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+          MRS current_flags, CPSR                 /* Get current CPSR */
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #1267-D: Implicit physical register R4 should be defined as a variable
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #3048-D: inline assembly not permitted when generating Thumb1 code
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #3042-D: detected use of ARM inline assembly in a Thumb function; automatically promoted function to ARM
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c(630): warning:  #3043-D: automatic promotion of functions to ARM is deprecated; use "#pragma arm" instead
+          MOV R4,0
+src\hal\prth_chimera\sys\sys_irq.c: 28 warnings, 0 errors
+compiling hw_radio.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\hal\hw\radio\bk3011\hw_radio.c: 3 warnings, 0 errors
+compiling beken_process.c...
+compiling sys_hal_config.c...
+compiling hw_memcpy_impl.c...
+compiling sys_power.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\hal\prth_chimera\sys\sys_power.c(54): warning:  #1295-D: Deprecated declaration _SYSboot_Power_Down - give arg types
+  void   _SYSboot_Power_Down();
+src\hal\prth_chimera\sys\sys_power.c(233): warning:  #223-D: function "ARM_Enter_Light_mode" declared implicitly
+          ARM_Enter_Light_mode();
+src\hal\prth_chimera\sys\sys_power.c(45): warning:  #550-D: variable "LowFrequencyOscillatorAvailable" was set but never used
+  static u_int8 LowFrequencyOscillatorAvailable = 0;
+src\hal\prth_chimera\sys\sys_power.c: 6 warnings, 0 errors
+compiling hw_codec.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+src\hal\prth_chimera\hw\hw_codec.c: 2 warnings, 0 errors
+compiling main.c...
+.\src\Core\hw\include\hw_lc.h(63): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void);
+.\src\Core\hw\include\hw_lc_impl.h(433): warning:  #815-D: type qualifier on return type is meaningless
+  __INLINE__ t_clock volatile HW_get_native_clk(void)
+.\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
+     return (1 ^ (t_role)pDevLink->role_of_peer);
+src\App\main.c(46): warning:  #223-D: function "delay_ms" declared implicitly
+      delay_ms(2);
+src\App\main.c(79): warning:  #223-D: function "readLinkNum" declared implicitly
+        readLinkNum();
+src\App\main.c(66): warning:  #177-D: variable "i" was declared but never referenced
+      u_int32 flags,i;
+src\App\main.c(116): warning:  #223-D: function "Host_Loop" declared implicitly
+        Host_Loop();
+src\App\main.c(135): warning:  #223-D: function "LMscan_Write_Scan_Enable" declared implicitly
+          LMscan_Write_Scan_Enable(3);
+src\App\main.c(136): warning:  #188-D: enumerated type mixed with another type
+          BTtst_Set_DUT_Mode(1);
+src\App\main.c(148): warning:  #223-D: function "BTms_Sched" declared implicitly
+          BTms_Sched();
+src\App\main.c: 10 warnings, 0 errors
+compiling DeviceBtj_Handler.c...
+src\App\DeviceBtj_Handler.c(489): warning:  #223-D: function "readBtLinkInfo" declared implicitly
+                readBtLinkInfo(linkkey_buff, 0);
+src\App\DeviceBtj_Handler.c(538): warning:  #223-D: function "writeLinkNum" declared implicitly
+                                writeLinkNum(i);
+src\App\DeviceBtj_Handler.c(559): warning:  #111-D: statement is unreachable
+                                                bprintf("continue!\n");
+src\App\DeviceBtj_Handler.c(610): warning:  #223-D: function "readBtLinkInfo" declared implicitly
+                        readBtLinkInfo(linkkey_buff, i);
+src\App\DeviceBtj_Handler.c(628): warning:  #223-D: function "readLinkNum" declared implicitly
+                                linkNum = readLinkNum();
+src\App\DeviceBtj_Handler.c(635): warning:  #111-D: statement is unreachable
+                        if((linkNum != i) && (linkNum == num - 1))
+src\App\DeviceBtj_Handler.c(637): warning:  #223-D: function "readLinkNum" declared implicitly
+                                linkNum = readLinkNum();
+src\App\DeviceBtj_Handler.c(662): warning:  #223-D: function "writeBtLinkInfo" declared implicitly
+                        writeBtLinkInfo(linkkey_buff, linkNum);
+src\App\DeviceBtj_Handler.c(686): warning:  #167-D: argument of type "u_int32 *" is incompatible with parameter of type "volatile uint32 *"
+              uart_buff_send((volatile u_int8**)&MsgBuffer, (u_int32*)&MsgLength);
+src\App\DeviceBtj_Handler.c(991): warning:  #223-D: function "uart_callback" declared implicitly
+                  uart_callback(uart_rx_tx_buff + uart_rx_buff_tailor, temp_data_len);
+src\App\DeviceBtj_Handler.c(1003): warning:  #223-D: function "uart_callback" declared implicitly
+                      uart_callback(uart_rx_tx_buff + uart_rx_buff_tailor, temp_data_len);
+src\App\DeviceBtj_Handler.c(1010): warning:  #223-D: function "uart_callback" declared implicitly
+                      uart_callback(uart_rx_tx_buff + uart_rx_buff_tailor, temp_data_len);
+src\App\DeviceBtj_Handler.c(1047): warning:  #223-D: function "SPI_transmit_data" declared implicitly
+                        SPI_transmit_data(spi_tx_data, spi_rx_data, 1);
+src\App\DeviceBtj_Handler.c(1043): warning:  #177-D: variable "i" was declared but never referenced
+                        uint8 i;
+src\App\DeviceBtj_Handler.c(1123): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "BTPBYTE"
+                    if(DeviceRfc_Send(&btj_adapter, &spp_service, uart_send_buff, uart_send_length))
+src\App\DeviceBtj_Handler.c(1130): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "BTPBYTE"
+                                if(DeviceRfc_Send(&btj_adapter, &spp_service, spi_rx_data, spi_rx_buff_len))
+src\App\DeviceBtj_Handler.c(973): warning:  #177-D: variable "uart_rx_buff_cnt_temp" was declared but never referenced
+        static u_int8 uart_rx_buff_cnt_temp;
+src\App\DeviceBtj_Handler.c(1308): warning:  #940-D: missing return statement at end of non-void function "getATCommand"
+  }
+src\App\DeviceBtj_Handler.c: 18 warnings, 0 errors
+compiling driver_flash.c...
+src\Driver\driver_flash.c(276): warning:  #223-D: function "memcpy" declared implicitly
+              memcpy(&buffer[k],buf,32);
+src\Driver\driver_flash.c(298): warning:  #223-D: function "memcpy" declared implicitly
+              memcpy(buf,&buffer[k],32);
+src\Driver\driver_flash.c(467): warning:  #223-D: function "SYSirq_Disable_Interrupts_Save_Flags" declared implicitly
+        SYSirq_Disable_Interrupts_Save_Flags(&cpu_flags);
+src\Driver\driver_flash.c(499): warning:  #223-D: function "SYSirq_Interrupts_Restore_Flags" declared implicitly
+        SYSirq_Interrupts_Restore_Flags(cpu_flags);
+src\Driver\driver_flash.c(465): warning:  #177-D: variable "temp0" was declared but never referenced
+        uint32 temp0 = 0;
+src\Driver\driver_flash.c(540): warning:  #223-D: function "memcpy" declared implicitly
+      memcpy(&temp_buff[0],buff1,28);
+src\Driver\driver_flash.c(537): warning:  #177-D: variable "i" was declared but never referenced
+      uint8 temp_buff[60],i;
+src\Driver\driver_flash.c(557): warning:  #177-D: variable "i" was declared but never referenced
+      uint8 temp_buff[60],i;
+src\Driver\driver_flash.c(582): warning:  #223-D: function "memcpy" declared implicitly
+      memcpy(buff1,&temp_buff[0],28);
+src\Driver\driver_flash.c(598): warning:  #177-D: variable "env_config" was declared but never referenced
+        ENV_CONFIG_P env_config=(ENV_CONFIG_P)config_buff;
+src\Driver\driver_flash.c(636): warning:  #550-D: variable "state" was set but never used
+        uint8 state = 0;
+src\Driver\driver_flash.c: 11 warnings, 0 errors
+compiling driver_gpio.c...
+compiling driver_icu.c...
+compiling driver_timer.c...
+src\Driver\driver_timer.c(212): warning:  #223-D: function "LSLCslot_Handle_AUX_TIM" declared implicitly
+          LSLCslot_Handle_AUX_TIM();
+src\Driver\driver_timer.c: 1 warning, 0 errors
+compiling driver_WDT.c...
+compiling driver_adc.c...
+compiling Driver_spi.c...
+linking...
+.\obj\BK3231S_Test_Firmware.axf: Warning: L6413W: Disabling merging for devicebtj_stack_sdpdb.o(.conststring), Section contains misaligned string(s).
+Program Size: Code=161852 RO-data=4848 RW-data=1064 ZI-data=14536  
+Finished: 0 information, 1 warning and 0 error messages.
+FromELF: creating hex file...
+After Build - User command #1: fromelf --bin --output .\obj\BK3231S_Test_Firmware.bin .\obj\BK3231S_Test_Firmware.axf
+After Build - User command #2: encrypt.bat
+E:\keil project\BK3231\BK3231S_designkit_V1.91>encrypt .\obj\BK3231S_Test_Firmware.bin 00000000 00000000 00000000 00000000 
+/**< @author <jiewu@bekencorp.com> */
+/**< @version v0.3 */
+ Encrypt Seccessfully!
+ -FileSize: 0x2b856
+".\obj\BK3231S_Test_Firmware.axf" - 0 Error(s), 80 Warning(s).
+*** Completed Cross-Module-Optimization after 2 iteration(s).
+</pre>
+</body>
+</html>
