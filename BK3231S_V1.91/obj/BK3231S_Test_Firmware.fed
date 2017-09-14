@@ -1,0 +1,283 @@
+;#<FEEDBACK># ARM Linker, 5050106: Last Updated: Thu Sep 14 13:42:57 2017
+;VERSION 0.2
+;FILE beken_process.o
+Beken_Read_Register <= USED 0
+Beken_Start_BlueTooth <= USED 0
+Beken_Stop_BlueTooth <= USED 0
+Beken_Write_Patch_Addr <= USED 0
+Beken_Write_Patch_Jump_Code <= USED 0
+Beken_Write_Patch_Memory <= USED 0
+Beken_Write_Register <= USED 0
+;FILE bt_addr_sync.o
+;FILE bt_init.o
+BT_Initialise_Ex <= USED 0
+;FILE bt_mini_sched.o
+BTms_Is_Available_Halt_System <= USED 0
+;FILE bt_test.o
+BTtst_Get_Loopback_Packet <= USED 0
+BTtst_Get_Loopback_Packet_Length <= USED 0
+BTtst_Get_Loopback_SCO_Packet <= USED 0
+BTtst_Loopback_SCO_Enabled <= USED 0
+;FILE bt_tester.o
+;FILE bt_timer.o
+BTtimer_Extract_Timer_D_proc_slots <= USED 0
+BTtimer_Reset_Slots <= USED 0
+BTtimer_Reset_Ticks <= USED 0
+;FILE config.o
+;FILE devicebtj_endians.o
+DeviceBtj_Endians_Init <= USED 0
+;FILE devicebtj_fcs.o
+;FILE devicebtj_handler.o
+DeviceBtj_linkkey_save <= USED 0
+charToDec <= USED 0
+exit_sniff <= USED 0
+;FILE devicebtj_stack_hci_cmd.o
+DeviceHci_ConnectCancel <= USED 0
+DeviceHci_WriteLinkSupervisionTimeout <= USED 0
+DeviceHci_WriteLocalAddr <= USED 0
+Role_Discovery_Command <= USED 0
+;FILE devicebtj_stack_hci_evt.o
+;FILE devicebtj_stack_hid.o
+;FILE devicebtj_stack_l2c.o
+DeviceL2c_Send_EchoRsp <= USED 0
+;FILE devicebtj_stack_rfc.o
+DeviceRfc_Sabm_Control <= USED 0
+;FILE devicebtj_stack_sdp.o
+;FILE devicebtj_stack_sdpdb.o
+;FILE devicebtj_stack_sdpdb_parser.o
+DeviceSdpdb_Parse_DataElement_Body <= USED 0
+;FILE devicebtj_utils.o
+DeviceBtj_Utils_DevMemAddr_ChkZero <= USED 0
+;FILE dl_dev_impl.o
+DL_Alloc_Next_Shared_eSCO_LT_Addr <= USED 0
+DL_Alloc_eSCO_LT_Addr <= USED 0
+DL_Free_eSCO_LT_Addr <= USED 0
+DL_Is_eSCO_LT_Addr_Shared <= USED 0
+DL_LT_ADDR_to_LT_INDEX_Mapping <= USED 0
+DL_Record_eSCO_LT_Addr <= USED 0
+DL_Reset_RSSI_History <= USED 0
+;FILE driver_adc.o
+ADC_Cancel <= USED 0
+ADC_Deinit <= USED 0
+ADC_Get_Value <= USED 0
+ADC_Init <= USED 0
+ADC_Set_Chn <= USED 0
+;FILE driver_flash.o
+fflash_wr_protect_16k <= USED 0
+flash_read_sr <= USED 0
+flash_wp_ALL <= USED 0
+flash_wr_protect_none <= USED 0
+flash_write_disable <= USED 0
+flash_write_enable <= USED 0
+set_flash_HPM <= USED 0
+;FILE driver_gpio.o
+DEBUG_MSG <= USED 0
+gpio_output_for_debug <= USED 0
+gpio_sleep <= USED 0
+;FILE driver_icu.o
+CLK32K_AutoCali_Enable <= USED 0
+Close_Baseband_Clock <= USED 0
+Open_Baseband_Clock <= USED 0
+Set_CPU_Speed_32K <= USED 0
+ceva_initial <= USED 0
+;FILE driver_spi.o
+BK_SPI_Test_Master_Tx <= USED 0
+GPIO_SPI_function_enable <= USED 0
+SPI_transmit_data <= USED 0
+is_spi_busy <= USED 0
+spi_callback <= USED 0
+spi_init <= USED 0
+;FILE driver_timer.o
+HW_set_aux_sys_timer <= USED 0
+Timer_ISR2 <= USED 0
+Timer_Serve_Table <= USED 0
+Timer_Updata <= USED 0
+;FILE driver_uart.o
+;FILE driver_wdt.o
+Driver_wdt_feed_dog <= USED 0
+;FILE driver_xvr.o
+;FILE hc_cmd_disp.o
+;FILE hc_event_gen.o
+;FILE hc_flow_control.o
+HCfc_Read_Host_Controller_To_Host_Flow_Control <= USED 0
+HCfc_Read_SYN_Flow_Control_Enable <= USED 0
+HCfc_Write_SYN_Flow_Control_Enable <= USED 0
+;FILE hw_codec.o
+HWcodec_Disable <= USED 0
+HWcodec_Enable <= USED 0
+HWcodec_Get_VCI_Clk_Sel <= USED 0
+HWcodec_Get_VCI_Clk_Sel_Map <= USED 0
+HWcodec_Is_Valid_SCO_Conversion <= USED 0
+HWcodec_Set_Voice_Setting <= USED 0
+;FILE hw_delay.o
+HWdelay_Wait_For_10us <= USED 0
+HWdelay_Wait_For_Serial_Interface_Busy_us <= USED 0
+HWdelay_Wait_For_Serial_Interface_Idle <= USED 0
+HWdelay_Wait_For_ms <= USED 0
+;FILE hw_lc.o
+;FILE hw_memcpy_impl.o
+__hw_memcpy_dummy <= USED 0
+;FILE hw_radio.o
+HWradio_Enter_Low_Power_Mode_Forced <= USED 0
+HWradio_Get_Radio_Register <= USED 0
+HWradio_Get_Tx_Power_Level <= USED 0
+HWradio_Set_Radio_Register <= USED 0
+HWradio_Set_Rx_Gain <= USED 0
+Send_Receive_Command_Now <= USED 0
+_HWradio_ReadNow <= USED 0
+;FILE lc_interface.o
+LC_Decr_Power <= USED 0
+LC_Disable_Codec <= USED 0
+LC_Enable_Codec <= USED 0
+LC_Get_Hardware_SCO_CFG <= USED 0
+LC_Get_Max_Sleep_Time_Slots <= USED 0
+LC_Get_PTT_ACL <= USED 0
+LC_Get_PTT_ESCO <= USED 0
+LC_Get_Vci_Clk_Sel <= USED 0
+LC_Get_Vci_Clk_Sel_Map <= USED 0
+LC_Incr_Power <= USED 0
+LC_Is_Valid_SCO_Conversion <= USED 0
+LC_Read_Power <= USED 0
+LC_Register_Access_Window_Callback_Handler <= USED 0
+LC_Set_PTT_ESCO <= USED 0
+LC_Write_Supervision_Timeout <= USED 0
+;FILE lmp_acl_connection.o
+;FILE lmp_acl_container.o
+Get_Active_Acl_Num <= USED 0
+;FILE lmp_afh.o
+;FILE lmp_ch.o
+Is_HCI_SCO_Packet_Type <= USED 0
+Is_HCI_SYN_Packet_Type <= USED 0
+Is_HCI_eSCO_Packet_Type <= USED 0
+LMconnection_LMP_Packet_Type_Table_Req <= USED 0
+_Cancel_Pending_Page_Inquiry <= USED 0
+;FILE lmp_cmd_disp.o
+;FILE lmp_con_filter.o
+;FILE lmp_config.o
+;FILE lmp_ecc.o
+ECC_Point_Multiplication_uint32 <= USED 0
+;FILE lmp_encode_pdu.o
+LM_Encode_LMP_Accepted_Ext_PDU <= USED 0
+;FILE lmp_init.o
+;FILE lmp_inquiry.o
+;FILE lmp_link_control_protocol.o
+LMlc_LMP_Decr_Power_Req <= USED 0
+LMlc_LMP_Incr_Power_Req <= USED 0
+LMlc_LMP_Max_Power <= USED 0
+LMlc_LMP_Min_Power <= USED 0
+LMlc_LMP_Page_Mode_Req <= USED 0
+LMlc_LMP_Page_Scan_Mode_Req <= USED 0
+LMlc_LMP_Power_Control_Req <= USED 0
+LMlc_LMP_Power_Control_Resp <= USED 0
+;FILE lmp_link_key_db.o
+;FILE lmp_link_policy.o
+LMpol_Adjust_ACL_Packet_Types_On_All_Links <= USED 0
+LMpol_Adjust_Poll_Position_On_All_Links <= USED 0
+LMpol_Flow_Stop <= USED 0
+LMpol_Service_Imminent_Wakeup_Control <= USED 0
+_LMpol_Update_Sniff_Parameters <= USED 0
+;FILE lmp_link_policy_protocol.o
+;FILE lmp_link_qos.o
+LMqos_LM_Change_SCO_Packet_Type <= USED 0
+LMqos_LM_Force_Max_Slots_In <= USED 0
+LMqos_LM_Get_HCI_ACL_Packet_Types <= USED 0
+;FILE lmp_scan.o
+LMscan_Read_Inquiry_Scan_Type <= USED 0
+LMscan_Read_Page_Scan_Type <= USED 0
+;FILE lmp_sec_core.o
+;FILE lmp_sec_engine.o
+;FILE lmp_sec_peer.o
+;FILE lmp_sec_upper.o
+;FILE lmp_ssp.o
+;FILE lmp_ssp_engine.o
+F1_Invert <= USED 0
+Test_HMAC_SHA_256 <= USED 0
+Test_SPP_Functions <= USED 0
+;FILE lmp_timer.o
+LMtmr_Get_Residual_Slots <= USED 0
+LMtmr_Modify_Timer <= USED 0
+;FILE lmp_utils.o
+;FILE lslc_access.o
+LSLCacc_Is_SCO_CFG_Eight_Bit_Input_Mode <= USED 0
+LSLCacc_Sync_Setup_SCO_ROUTE_Ex <= USED 0
+;FILE lslc_afh.o
+;FILE lslc_assmnt.o
+;FILE lslc_class.o
+;FILE lslc_clk.o
+;FILE lslc_freq.o
+;FILE lslc_hop.o
+LSLChop_Get_Train <= USED 0
+LSLChop_Get_rfSelection <= USED 0
+LSLChop_Setup_Hop_Kernel <= USED 0
+;FILE lslc_irq.o
+;FILE lslc_pkt.o
+;FILE lslc_slot.o
+;FILE lslc_stat.o
+LSLCstat_Get_Next_Packet_Index <= USED 0
+LSLCstat_Get_Packet_Log <= USED 0
+LSLCstat_Get_Packet_Log_Type <= USED 0
+LSLCstat_Log_Tx_Packet <= USED 0
+;FILE main.o
+delay_for_32k <= USED 0
+;FILE sys_config.o
+;FILE sys_hal_config.o
+EEPROM_Initialise_Clock <= USED 0
+EEPROM_Initialise_Rx_Fifo <= USED 0
+EEPROM_Read_Byte <= USED 0
+EEPROM_Self_Check <= USED 0
+EEPROM_Soft_Reset <= USED 0
+EEPROM_Wait_For <= USED 0
+EEPROM_Write_Byte <= USED 0
+SYShalconfig_Get_Stored_BD_ADDR <= USED 0
+SYShalconfig_Get_Stored_Device_Class <= USED 0
+SYShalconfig_Get_Stored_Unit_Key <= USED 0
+SYShalconfig_Initialise_EEPROM <= USED 0
+SYShalconfig_SYS_Rand_Seed_Was_Set <= USED 0
+SYShalconfig_Set_System_Hardware_Configuration <= USED 0
+;FILE sys_init.o
+;FILE sys_irq.o
+SYSirq_Baseband_ISR_Restore_Flags <= USED 0
+SYSirq_Disable_Baseband_ISR_Save_Flags <= USED 0
+SYSirq_Disable_Interrupts_Only_IRQ_Save_Flags <= USED 0
+SYSirq_Enable_Baseband_ISR_Save_Flags <= USED 0
+SYSirq_IRQ_Tabasco_ISR <= USED 0
+;FILE sys_mmap.o
+;FILE sys_power.o
+SYSpwr_Is_Available_Halt_System <= USED 0
+;FILE sys_rand_num_gen.o
+;FILE tc_cmd_disp.o
+;FILE tc_event_gen.o
+TCeg_Read_Pump_Monitors_Event <= USED 0
+;FILE tc_interface.o
+_TC_Run_Pump_Tests <= USED 0
+;FILE tra_hcit.o
+TRAhcit_Generic_Dispatcher <= USED 0
+TRAhcit_Register_Generic_Dispatcher <= USED 0
+;FILE tra_queue.o
+BTq_Deallocate_Queue_Data <= USED 0
+BTq_Get_Total_Bytes_Enqueued <= USED 0
+BTq_Initialise_Data_Queue <= USED 0
+;FILE tra_uart.o
+TRAhcit_UART_Get_Default_Baud_Rate <= USED 0
+TRAhcit_UART_Transport_Activity <= USED 0
+;FILE uslc_chan_ctrl.o
+USLCchac_Force_To_Tx_State_If_Req <= USED 0
+;FILE uslc_inquiry.o
+USLCinq_Inquiry_Force_To_Tx_State_If_Req <= USED 0
+;FILE uslc_inquiryscan.o
+;FILE uslc_master_slave_switch.o
+;FILE uslc_page.o
+USLCpage_Page_Force_To_Tx_State_If_Req <= USED 0
+;FILE uslc_pagescan.o
+USLCpageScan_Resume <= USED 0
+;FILE uslc_park_master.o
+USLCparkMaster_Get_Ctrl_State <= USED 0
+USLCparkMaster_Register_Access_Window_Callback_Handler <= USED 0
+;FILE uslc_park_slave.o
+USLCparkSlave_Get_Ctrl_State <= USED 0
+;FILE uslc_return_to_piconet.o
+;FILE uslc_scheduler.o
+USLCsched_Get_Active_Device_Link <= USED 0
+USLCsched_Update_Chac_Procedure_If_Req <= USED 0
+;FILE uslc_sleep.o
+;FILE uslc_testmode.o

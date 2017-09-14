@@ -1,0 +1,5 @@
+--cpu ARM9E -g --apcs=interwork -I.\src\Core\include -I.\src\BKTestApp\include -I.\src\API\include
+-I d:\Keil_v5\ARM\RV31\INC
+-I d:\Keil_v5\ARM\CMSIS\Include
+--pd "__UVISION_VERSION SETA 514"
+--list .\obj\sys_fiq_irq.lst -o .\obj\sys_fiq_irq.o --depend .\obj\sys_fiq_irq.d "src\hal\prth_chimera\sys\sys_fiq_irq.s"

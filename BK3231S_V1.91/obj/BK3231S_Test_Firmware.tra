@@ -1,0 +1,45 @@
+*** Creating Trace Output File '.\obj\BK3231S_Test_Firmware.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\obj\sys_boot.o"'
+### List of Objects: adding '".\obj\sys_fiq_irq.o"'
+### List of Objects: adding '".\obj\sys_irq.o"'
+### List of Objects: adding '".\obj\hw_radio.o"'
+### List of Objects: adding '".\obj\beken_process.o"'
+### List of Objects: adding '".\obj\sys_mmi.o"'
+### List of Objects: adding '".\obj\sys_hal_config.o"'
+### List of Objects: adding '".\obj\hw_memcpy_impl.o"'
+### List of Objects: adding '".\obj\sys_mmap.o"'
+### List of Objects: adding '".\obj\sys_init.o"'
+### List of Objects: adding '".\obj\sys_power.o"'
+### List of Objects: adding '".\obj\hw_codec.o"'
+### List of Objects: adding '".\obj\main.o"'
+### List of Objects: adding '".\obj\config.o"'
+### List of Objects: adding '".\obj\keyboard.o"'
+### List of Objects: adding '".\obj\devicebtj_handler.o"'
+### List of Objects: adding '".\obj\devicebtj_stack_sdpdb.o"'
+### List of Objects: adding '".\obj\driver_flash.o"'
+### List of Objects: adding '".\obj\driver_gpio.o"'
+### List of Objects: adding '".\obj\driver_icu.o"'
+### List of Objects: adding '".\obj\driver_timer.o"'
+### List of Objects: adding '".\obj\driver_uart.o"'
+### List of Objects: adding '".\obj\driver_wdt.o"'
+### List of Objects: adding '".\obj\driver_xvr.o"'
+### List of Objects: adding '".\obj\driver_adc.o"'
+### List of Objects: adding '".\src\lib\BK3231S_LIB.lib"'
+### ADS-LD Command completed:
+--cpu ARM9E ".\obj\sys_boot.o" ".\obj\sys_fiq_irq.o" ".\obj\sys_irq.o" ".\obj\hw_radio.o" ".\obj\beken_process.o" ".\obj\sys_mmi.o" ".\obj\sys_hal_config.o" ".\obj\hw_memcpy_impl.o" ".\obj\sys_mmap.o" ".\obj\sys_init.o" ".\obj\sys_power.o" ".\obj\hw_codec.o" ".\obj\main.o" ".\obj\config.o" ".\obj\keyboard.o" ".\obj\devicebtj_handler.o" ".\obj\devicebtj_stack_sdpdb.o" ".\obj\driver_flash.o" ".\obj\driver_gpio.o" ".\obj\driver_icu.o" ".\obj\driver_timer.o" ".\obj\driver_uart.o" ".\obj\driver_wdt.o" ".\obj\driver_xvr.o" ".\obj\driver_adc.o" D:\work\BK3231S\CODE\designkit\BK3231S_designkit_V1.9\src\lib\BK3231S_LIB.lib --feedback ".\obj\BK3231S_Test_Firmware.fed" 
+--strict --scatter ".\lnk\beken.txt" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\obj\BK3231S_Test_Firmware.map" -o ".\obj\BK3231S_Test_Firmware.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\obj\BK3231S_Test_Firmware.axf'
+### ADS-LD Command File: '.\obj\BK3231S_Test_Firmware.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\obj\BK3231S_Test_Firmware.lnp', Handle=0x00000204
+### Writing '.lnp' file
+### ADS-LD Command file '.\obj\BK3231S_Test_Firmware.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

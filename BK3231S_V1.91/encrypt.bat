@@ -1,0 +1,2 @@
+encrypt .\obj\BK3231S_Test_Firmware.bin 00000000 00000000 00000000 00000000
+

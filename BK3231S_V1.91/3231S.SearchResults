@@ -1,0 +1,6 @@
+---- iosCount Matches (5 in 1 files) ----
+Main.c (src\app):17:u_int8 iosCount = 0;
+Main.c (src\app):141:	if(iosCount < 50)
+Main.c (src\app):155:			iosCount++;
+Main.c (src\app):156:			if(iosCount > 100)
+Main.c (src\app):159:				iosCount = 0;
