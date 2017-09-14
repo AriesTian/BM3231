@@ -9939,66 +9939,34 @@ void Timer_ISR1(uint8 sck)
 		(*( (volatile unsigned long *) (0x00F00A00 + (0x4*4)) )) = bk_timer_T1_cnt;
 
 		ledCount++;
-		if(!(sys_flag & 0X00000400))
+		if(!(sys_flag & 0X00000400)) 
 		{
-			if(blinkCount)
+			if(ledCount < 5)
 			{
-				if(ledCount < 2)
-				{
-					GPIO_output(1, 4, 1);
-					blinkCount--;
-				}
-				else if(ledCount < 3)
-				{
-					GPIO_output(1, 4, 0);
-					ledCount = 0;
-				}
+				GPIO_output(3, 0, 1);
+				
+				blinkCount--;
 			}
-			else 
+			else if(ledCount < 10)
 			{
-				if(ledCount < 2)
-				{
-					GPIO_output(1, 4, 1);
-				}
-				else if(ledCount <= 21)
-				{
-					GPIO_output(1, 4, 0);
-					if(ledCount == 21)
-						ledCount = 0;
-				}
+				GPIO_output(3, 0, 0);
+				GPIO_output(3, 1, 0);
+				GPIO_output(1, 4, 0);
+				
+			}
+			else
+			{
+				ledCount = 0;
 			}
 		}
 		else if(sys_flag & 0X00000400) 
 		{
 			if(blinkCount)
 				blinkCount = 0;
-			
-			if(ledMode)
-			{
-				ledCount = 0;
-				GPIO_output(1, 4, 1);
-			}
-			else
-			{
-				if(ledCount < 2)
-				{
-					GPIO_output(1, 4, 1);
-				}
-				else if(ledCount < 3)
-				{
-					GPIO_output(1, 4, 0);
-				}
-				else if(ledCount < 4)
-				{
-					GPIO_output(1, 4, 1);
-				}
-				else if(ledCount <= 24)
-				{
-					GPIO_output(1, 4, 0);
-					if(ledCount == 24)
-						ledCount = 0;
-				}
-			}
+			ledCount = 0;
+			GPIO_output(3, 1, 1);
+			GPIO_output(1, 4, 1);
+			GPIO_output(3, 0, 1);
 		}
 	}
 	

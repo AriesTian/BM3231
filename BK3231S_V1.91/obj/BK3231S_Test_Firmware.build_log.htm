@@ -21,7 +21,7 @@ Target DLL:      Segger\JLTAgdi.dll V1.59.0.0
 Dialog DLL:      TARMP3.DLL V1.02
  
 <h2>Project:</h2>
-E:\keil project\BK3231\BK3231S_V1.91_UART_HID_OK\BK3231S_Test_Firmware.uvproj
+E:\GIT\BM3231\BK3231S_V1.91\BK3231S_Test_Firmware.uvproj
 Project File Date:  08/23/2017
 
 <h2>Output:</h2>
@@ -184,19 +184,19 @@ compiling main.c...
   __INLINE__ t_clock volatile HW_get_native_clk(void)
 .\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
      return (1 ^ (t_role)pDevLink->role_of_peer);
-src\App\main.c(53): warning:  #223-D: function "delay_ms" declared implicitly
+src\App\main.c(49): warning:  #223-D: function "delay_ms" declared implicitly
       delay_ms(2);
-src\App\main.c(98): warning:  #223-D: function "readLinkNum" declared implicitly
+src\App\main.c(94): warning:  #223-D: function "readLinkNum" declared implicitly
         readLinkNum();
-src\App\main.c(180): warning:  #223-D: function "Host_Loop" declared implicitly
+src\App\main.c(176): warning:  #223-D: function "Host_Loop" declared implicitly
         Host_Loop();
-src\App\main.c(137): warning:  #177-D: variable "test" was declared but never referenced
+src\App\main.c(133): warning:  #177-D: variable "test" was declared but never referenced
         uint32 test = 0;
-src\App\main.c(196): warning:  #223-D: function "LMscan_Write_Scan_Enable" declared implicitly
+src\App\main.c(192): warning:  #223-D: function "LMscan_Write_Scan_Enable" declared implicitly
           LMscan_Write_Scan_Enable(3);
-src\App\main.c(197): warning:  #188-D: enumerated type mixed with another type
+src\App\main.c(193): warning:  #188-D: enumerated type mixed with another type
           BTtst_Set_DUT_Mode(1);
-src\App\main.c(207): warning:  #223-D: function "BTms_Sched" declared implicitly
+src\App\main.c(203): warning:  #223-D: function "BTms_Sched" declared implicitly
           BTms_Sched();
 src\App\main.c: 10 warnings, 0 errors
 creating preprocessor file for config.c...
@@ -271,9 +271,9 @@ creating preprocessor file for driver_icu.c...
 compiling driver_icu.c...
 creating preprocessor file for driver_timer.c...
 compiling driver_timer.c...
-src\Driver\driver_timer.c(276): warning:  #223-D: function "Set_CPU_PLL_clk" declared implicitly
+src\Driver\driver_timer.c(244): warning:  #223-D: function "Set_CPU_PLL_clk" declared implicitly
               Set_CPU_PLL_clk(1); 
-src\Driver\driver_timer.c(279): warning:  #223-D: function "LSLCslot_Handle_AUX_TIM" declared implicitly
+src\Driver\driver_timer.c(247): warning:  #223-D: function "LSLCslot_Handle_AUX_TIM" declared implicitly
           LSLCslot_Handle_AUX_TIM();
 src\Driver\driver_timer.c: 2 warnings, 0 errors
 creating preprocessor file for driver_uart.c...
@@ -302,7 +302,7 @@ src\Driver\Driver_spi.c(325): warning:  #167-D: argument of type "volatile char 
 src\Driver\Driver_spi.c: 3 warnings, 0 errors
 linking...
 .\obj\BK3231S_Test_Firmware.axf: Warning: L6413W: Disabling merging for devicebtj_stack_sdpdb.o(.conststring), Section contains misaligned string(s).
-Program Size: Code=163100 RO-data=4848 RW-data=1072 ZI-data=14296  
+Program Size: Code=163068 RO-data=4848 RW-data=1072 ZI-data=14296  
 Finished: 0 information, 1 warning and 0 error messages.
 ".\obj\BK3231S_Test_Firmware.axf" - 0 Error(s), 118 Warning(s).
 
@@ -407,19 +407,19 @@ compiling main.c...
   __INLINE__ t_clock volatile HW_get_native_clk(void)
 .\src\Core\lc\dl\include\dl_dev_impl.h(233): warning:  #188-D: enumerated type mixed with another type
      return (1 ^ (t_role)pDevLink->role_of_peer);
-src\App\main.c(53): warning:  #223-D: function "delay_ms" declared implicitly
+src\App\main.c(49): warning:  #223-D: function "delay_ms" declared implicitly
       delay_ms(2);
-src\App\main.c(98): warning:  #223-D: function "readLinkNum" declared implicitly
+src\App\main.c(94): warning:  #223-D: function "readLinkNum" declared implicitly
         readLinkNum();
-src\App\main.c(180): warning:  #223-D: function "Host_Loop" declared implicitly
+src\App\main.c(176): warning:  #223-D: function "Host_Loop" declared implicitly
         Host_Loop();
-src\App\main.c(137): warning:  #177-D: variable "test" was declared but never referenced
+src\App\main.c(133): warning:  #177-D: variable "test" was declared but never referenced
         uint32 test = 0;
-src\App\main.c(196): warning:  #223-D: function "LMscan_Write_Scan_Enable" declared implicitly
+src\App\main.c(192): warning:  #223-D: function "LMscan_Write_Scan_Enable" declared implicitly
           LMscan_Write_Scan_Enable(3);
-src\App\main.c(197): warning:  #188-D: enumerated type mixed with another type
+src\App\main.c(193): warning:  #188-D: enumerated type mixed with another type
           BTtst_Set_DUT_Mode(1);
-src\App\main.c(207): warning:  #223-D: function "BTms_Sched" declared implicitly
+src\App\main.c(203): warning:  #223-D: function "BTms_Sched" declared implicitly
           BTms_Sched();
 src\App\main.c: 10 warnings, 0 errors
 compiling DeviceBtj_Handler.c...
@@ -485,9 +485,9 @@ src\Driver\driver_flash.c: 11 warnings, 0 errors
 compiling driver_gpio.c...
 compiling driver_icu.c...
 compiling driver_timer.c...
-src\Driver\driver_timer.c(276): warning:  #223-D: function "Set_CPU_PLL_clk" declared implicitly
+src\Driver\driver_timer.c(244): warning:  #223-D: function "Set_CPU_PLL_clk" declared implicitly
               Set_CPU_PLL_clk(1); 
-src\Driver\driver_timer.c(279): warning:  #223-D: function "LSLCslot_Handle_AUX_TIM" declared implicitly
+src\Driver\driver_timer.c(247): warning:  #223-D: function "LSLCslot_Handle_AUX_TIM" declared implicitly
           LSLCslot_Handle_AUX_TIM();
 src\Driver\driver_timer.c: 2 warnings, 0 errors
 compiling driver_WDT.c...
@@ -502,16 +502,16 @@ src\Driver\Driver_spi.c(325): warning:  #167-D: argument of type "volatile char 
 src\Driver\Driver_spi.c: 3 warnings, 0 errors
 linking...
 .\obj\BK3231S_Test_Firmware.axf: Warning: L6413W: Disabling merging for devicebtj_stack_sdpdb.o(.conststring), Section contains misaligned string(s).
-Program Size: Code=163100 RO-data=4848 RW-data=1072 ZI-data=14296  
+Program Size: Code=163068 RO-data=4848 RW-data=1072 ZI-data=14296  
 Finished: 0 information, 1 warning and 0 error messages.
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin --output .\obj\BK3231S_Test_Firmware.bin .\obj\BK3231S_Test_Firmware.axf
 After Build - User command #2: encrypt.bat
-E:\keil project\BK3231\BK3231S_V1.91_UART_HID_OK>encrypt .\obj\BK3231S_Test_Firmware.bin 00000000 00000000 00000000 00000000 
+E:\GIT\BM3231\BK3231S_V1.91>encrypt .\obj\BK3231S_Test_Firmware.bin 00000000 00000000 00000000 00000000 
 /**< @author <jiewu@bekencorp.com> */
 /**< @version v0.3 */
  Encrypt Seccessfully!
- -FileSize: 0x2bd84
+ -FileSize: 0x2bd62
 ".\obj\BK3231S_Test_Firmware.axf" - 0 Error(s), 85 Warning(s).
 *** Completed Cross-Module-Optimization after 2 iteration(s).
 </pre>

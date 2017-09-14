@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\obj\BK3231S_Test_Firmware.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\obj\BK3231S_Test_Firmware.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Thu Sep 14 13:43:05 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Thu Sep 14 16:23:07 2017
 <BR><P>
 <H3>Maximum Stack Usage =       1740 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2777,7 +2777,7 @@ Global Symbols
 <LI><a href="#[2a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ECC_Point_Multiplication
 </UL>
 
-<P><STRONG><a name="[2bc]"></a>GPIO_Initial</STRONG> (Thumb, 98 bytes, Stack size 4 bytes, driver_gpio.o(i.GPIO_Initial))
+<P><STRONG><a name="[2bc]"></a>GPIO_Initial</STRONG> (Thumb, 138 bytes, Stack size 4 bytes, driver_gpio.o(i.GPIO_Initial))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = GPIO_Initial &rArr; GPIO_config
 </UL>
 <BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_output
@@ -10269,8 +10269,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[49e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer_ISR
 </UL>
 
-<P><STRONG><a name="[50e]"></a>Timer_ISR1</STRONG> (Thumb, 214 bytes, Stack size 24 bytes, driver_timer.o(i.Timer_ISR1))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Timer_ISR1 &rArr; GPIO_output
+<P><STRONG><a name="[50e]"></a>Timer_ISR1</STRONG> (Thumb, 164 bytes, Stack size 16 bytes, driver_timer.o(i.Timer_ISR1))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Timer_ISR1 &rArr; GPIO_output
 </UL>
 <BR>[Calls]<UL><LI><a href="#[2be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_output
 </UL>

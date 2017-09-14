@@ -172,64 +172,32 @@ void Timer_ISR1(uint8 sck)
 		ledCount++;
 		if(!(sys_flag & FLAG_CONNECTED))/* disconnected status */
 		{
-			if(blinkCount)
+			if(ledCount < 5)
 			{
-				if(ledCount < 2)
-				{
-					GPIO_output(1, 4, 1);//open led
-					blinkCount--;
-				}
-				else if(ledCount < 3)
-				{
-					GPIO_output(1, 4, 0);//close led
-					ledCount = 0;
-				}
+				GPIO_output(3, 0, 1);//open led
+				//GPIO_output(1, 4, 1);//open led
+				blinkCount--;
 			}
-			else 
+			else if(ledCount < 10)
 			{
-				if(ledCount < 2)
-				{
-					GPIO_output(1, 4, 1);//open led
-				}
-				else if(ledCount <= 21)
-				{
-					GPIO_output(1, 4, 0);//close led
-					if(ledCount == 21)
-						ledCount = 0;
-				}
+				GPIO_output(3, 0, 0);//close led
+				GPIO_output(3, 1, 0);//bt status
+				GPIO_output(1, 4, 0);//bt status
+				//ledCount = 0;
+			}
+			else
+			{
+				ledCount = 0;
 			}
 		}
 		else if(sys_flag & FLAG_CONNECTED)/* connected status */
 		{
 			if(blinkCount)
 				blinkCount = 0;
-			
-			if(ledMode)
-			{
-				ledCount = 0;
-				GPIO_output(1, 4, 1);//always on 
-			}
-			else
-			{
-				if(ledCount < 2)
-				{
-					GPIO_output(1, 4, 1);//open led
-				}
-				else if(ledCount < 3)
-				{
-					GPIO_output(1, 4, 0);//close led
-				}
-				else if(ledCount < 4)
-				{
-					GPIO_output(1, 4, 1);//open led
-				}
-				else if(ledCount <= 24)
-				{
-					GPIO_output(1, 4, 0);//close led
-					if(ledCount == 24)
-						ledCount = 0;
-				}
-			}
+			ledCount = 0;
+			GPIO_output(3, 1, 1);//bt status
+			GPIO_output(1, 4, 1);//bt status
+			GPIO_output(3, 0, 1);//led always on
 		}
 	}
 	

@@ -20349,15 +20349,11 @@ uint16 asciiToKeycode(uint8 ascii);
 
 u_int8 bd_addr[6]={0x13,0x15,0x56,0xac,0xad,0xae};
 u_int8 env_config_buff[sizeof(ENV_CONFIG_T)];
-uint8 blinkCount = 24;
+uint8 blinkCount = 5;
 uint8 ledMode = 0;
 u_int8 WorkMode[3];
 u_int8 ios_flag = 0;
 u_int8 iosCount = 0;
-
-
-
-
 
 
 void delay_us(uint32 num)
@@ -20442,7 +20438,7 @@ void SYS_Initialise(void)
     if(env_config->config_flag&0X02)
         UART_Initial();
 
-#line 115 "src\\App\\main.c"
+#line 111 "src\\App\\main.c"
 
 	  
     
@@ -20469,7 +20465,7 @@ void host_contrl(void)
 	
 	 
 	if(config->work_mode == 0)
-		if(blinkCount == 23)
+		if(blinkCount == 3)
 			sys_flag |= 0X00000100;
 	else
 		sys_flag &= ~0X00000100;

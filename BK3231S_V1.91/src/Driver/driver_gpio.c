@@ -26,6 +26,10 @@ void GPIO_Initial(void)  // As GPIO Output
 	//LED
 	GPIO_config(1, 4, 1);	//p14 output
 	GPIO_output(1, 4, 0);	//output = 0
+	GPIO_config(3, 0, 1);	//p35 output
+	GPIO_output(3, 0, 0);	//output = 0
+	GPIO_config(3, 1, 1);	//p35 output
+	GPIO_output(3, 1, 0);	//output = 0
 	
 	//GPIO_config(3, 5, 1);	//p35 output
 	//GPIO_output(3, 5, 0);	//output = 0

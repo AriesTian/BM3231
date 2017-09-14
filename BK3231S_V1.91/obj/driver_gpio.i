@@ -4995,6 +4995,10 @@ void GPIO_Initial(void)
 	
 	GPIO_config(1, 4, 1);	
 	GPIO_output(1, 4, 0);	
+	GPIO_config(3, 0, 1);	
+	GPIO_output(3, 0, 0);	
+	GPIO_config(3, 1, 1);	
+	GPIO_output(3, 1, 0);	
 	
 	
 	
@@ -5019,7 +5023,7 @@ void GPIO_Initial(void)
 
 
  
-#line 64 "src\\Driver\\driver_gpio.c"
+#line 68 "src\\Driver\\driver_gpio.c"
 }
 
 void gpio_sleep()

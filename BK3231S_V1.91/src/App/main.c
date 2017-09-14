@@ -10,15 +10,11 @@
 
 u_int8 bd_addr[6]={0x13,0x15,0x56,0xac,0xad,0xae};
 u_int8 env_config_buff[sizeof(ENV_CONFIG_T)];
-uint8 blinkCount = 24;
+uint8 blinkCount = 5;
 uint8 ledMode = 0;
 u_int8 WorkMode[3];
 u_int8 ios_flag = 0;
 u_int8 iosCount = 0;
-
-
-//u_int8 spiCount = 0;
-//u_int8 templata = 0;
 
 
 void delay_us(uint32 num)
@@ -138,7 +134,7 @@ void host_contrl(void)
 	
 	/* HID auto connection flag */
 	if(config->work_mode == 0)
-		if(blinkCount == 23)
+		if(blinkCount == 3)//23)
 			sys_flag |= FLAG_AUTO_CONNECT_START;
 	else
 		sys_flag &= ~FLAG_AUTO_CONNECT_START;
